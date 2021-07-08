@@ -29,3 +29,11 @@ jobs:
         env:
           REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
 
+      - name: Trigger deployment
+        if: success()
+        uses: peter-evans/repository-dispatch@v1.1.3
+        with:
+          token: ${{ secrets.REPO_GHA_PAT }}
+          repository: ${{ github.repository }}
+          event-type: trigger-workflow-2
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
