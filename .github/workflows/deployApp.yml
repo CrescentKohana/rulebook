@@ -3,7 +3,8 @@
 name: DeployApp
 
 on:
-  workflow_dispatch
+  repository_dispatch:
+    types: [trigger-workflow-2]
 
 jobs:
   main:
@@ -19,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.sha }}
 
       - name: Azure Login
         uses: azure/login@v1
