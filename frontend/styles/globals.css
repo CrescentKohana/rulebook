@@ -8,9 +8,18 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #4da3f3;
   text-decoration: none;
+  transition: all .05s ease-in;
+  -moz-transition: all .05s ease-in;
+  -o-transition: all .05s ease-in;
+  -webkit-transition: all .05s ease-in;
 }
+
+a:hover, a:focus, a:active {
+  color: #4084c4;
+}
+
 
 * {
   box-sizing: border-box;

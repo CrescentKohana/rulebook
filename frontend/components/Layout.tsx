@@ -1,14 +1,15 @@
-import { FunctionComponent } from 'react'; // importing FunctionComponent
+import { FunctionComponent } from 'react'
 
-import styles from '../styles/Home.module.css'
+import * as types from '../types'
+import styles from '../styles/Layout.module.css'
+import typography from '../styles/Typography.module.css'
 
 import Link from 'next/link'
-
 import Nav from './Nav'
 import Footer from './Footer'
 
 interface LayoutProps {
-  chapters: Array<any>
+  chapters: types.TinyChapter[]
   children: React.ReactNode
 }
 
@@ -18,19 +19,19 @@ const Layout: FunctionComponent<LayoutProps> = ({ chapters, children }) => {
       <div className={styles.main}>
         <div className={styles.row}>
           <div className={styles.leftColumn}>
-          <div className={styles.header}> 
-            <h1 className={styles.title}>
-              <Link href='/'>Rulebook</Link>
-            </h1>
-          </div>
-            <Nav chapters={chapters} />
+            <div className={styles.leftColumnWrap}>
+              <div className={typography.header}> 
+                <h1 className={typography.title}><Link href='/'>Rulebook</Link></h1>
+              </div>
+              <Nav chapters={chapters} />
+              <Footer />
+            </div>
           </div>
           <div className={styles.rightColumn}>
             {children}
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

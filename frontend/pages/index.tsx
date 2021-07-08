@@ -1,17 +1,17 @@
 import { GetStaticProps } from 'next'
 import { fetchAPI } from "../lib/api"
 import { InferGetStaticPropsType } from 'next'
-
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 
+import * as types from '../types'
+import styles from '../styles/Layout.module.css'
 import Layout from '../components/Layout'
 
-const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Rulebook</title>
         <meta name="description" content="Rulebook (Next.js / TypeScript)" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -25,7 +25,7 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const rulebook = await fetchAPI('/', '?filter=true')
-  const chapters = rulebook.chapters
+  const chapters: types.Chapter[] = rulebook.chapters
 
   return {
     props: { chapters },
