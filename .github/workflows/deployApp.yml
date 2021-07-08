@@ -62,7 +62,7 @@ jobs:
 
       - name: Online check
         id: online_check
-        uses: pchalupa/site-health-check@v1
+        uses: pchalupa/site-health-check@v1.0.2
         with:
           url: '${{ secrets.AZURE_PUBLIC_URL }}'
 
