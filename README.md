@@ -8,6 +8,8 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 
 todo
 
+[docker-compose.yml](docker-compose.yml) for local setups and [docker-compose.aci.yml](docker-compose.aci.yml) for Azure.
+
 **[Specifications](docs/specifications.md)**
 
 ## Local setup
@@ -27,7 +29,7 @@ Following environmental variables (_Actions secrets_ in repo settings) are requi
 Example: `https://rulebook.northeurope.azurecontainer.io:443`.
 - **AZURE_REGION**: the region where the deployment is physically located Example: `northeurope`.
 
-- **REGISTRY_NAME**: 
+- **REGISTRY_NAME**: name of the Azure registry (**this-one-here**.azurecr.io).
 
 - **REGISTRY_USERNAME**: The clientId from the JSON output from the service principal creation.
 
