@@ -14,7 +14,7 @@ jobs:
 
     environment:
         name: Azure
-        url: ${{ steps.return_site.outputs.url  }}
+        url: https://rulebook.northeurope.azurecontainer.io
 
     steps:
       - name: Checkout repository
@@ -65,7 +65,3 @@ jobs:
         uses: pchalupa/site-health-check@v1.0.2
         with:
           url: '${{ secrets.AZURE_PUBLIC_URL }}'
-
-      - name: Return site
-        id: return_site
-        run: echo ::set-output name=url::${{ secrets.AZURE_PUBLIC_URL }}
