@@ -12,6 +12,10 @@ jobs:
       run:
         shell: bash
 
+    environment:
+            name: Azure
+            url: ${{ secrets.AZURE_PUBLIC_URL }}    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
