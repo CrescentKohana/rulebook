@@ -6,7 +6,10 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 
 ## Documentation
 
-todo
+- [README](backend) for **Backend**
+- [README](frontend) for **Frontend**
+- 
+
 
 [docker-compose.yml](docker-compose.yml) for local setups and [docker-compose.aci.yml](docker-compose.aci.yml) for Azure.
 

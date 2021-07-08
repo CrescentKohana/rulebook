@@ -27,10 +27,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     (chapter: { id: number, title: string, rules: null }) => ({ params: { slug: `${chapter.id}` }})
   )
 
-  return {
-    paths,
-    fallback: false
-  }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
