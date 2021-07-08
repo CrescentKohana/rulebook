@@ -1,0 +1,7 @@
+data/*
+backend/backend
+backend/backend.exe
+nginx/
+rulebook.txt
+.env.secrets
+docker-compose-secret.yml

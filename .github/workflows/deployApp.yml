@@ -1,0 +1,59 @@
+# Deploys the application to Azure Container Instances
+
+name: DeployApp
+
+on:
+  workflow_dispatch
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CI_AZURE_CREDENTIALS }}
+
+      - name: Install Docker Compose CLI
+        run: |
+          curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
+          mkdir -p ~/.docker/cli-plugins
+          curl -sSL https://github.com/docker/compose-cli/releases/download/v2.0.0-beta.6/docker-compose-linux-amd64 -o ~/.docker/cli-plugins/docker-compose
+          chmod +x ~/.docker/cli-plugins/docker-compose
+
+      - name: Docker Login to Azure
+        run: |
+          CLIENT_ID=$(echo '${{ secrets.CI_AZURE_CREDENTIALS }}' | jq --raw-output .clientId)
+          CLIENT_SECRET=$(echo '${{ secrets.CI_AZURE_CREDENTIALS }}' | jq --raw-output .clientSecret)
+          TENANT_ID=$(az account show --query homeTenantId --output tsv)
+          docker login azure --client-id "$CLIENT_ID" --client-secret "$CLIENT_SECRET" --tenant-id "$TENANT_ID"
+          az acr login --name "$REGISTRY_NAME" --username "$CLIENT_ID" --password "$CLIENT_SECRET"
+        env:
+         REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
+
+      - name: Create ACI context
+        run: |
+          SUBSCRIPTION_ID=$(az account show --query id --output tsv)
+          docker context create aci acictx --resource-group "$RESOURCE_GROUP" --location "$AZURE_REGION" --subscription-id "$SUBSCRIPTION_ID"
+        env:
+          AZURE_REGION: '${{ secrets.AZURE_REGION }}'
+          RESOURCE_GROUP: '${{ secrets.RESOURCE_GROUP }}'
+
+      - name: Deploy the app
+        run: |
+          docker --context acictx compose -f "docker-compose.aci.yml" up
+        env:
+          AZURE_PUBLIC_URL:  '${{ secrets.AZURE_PUBLIC_URL }}'
+          REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
+          SHARE_NAME:  '${{ secrets.SHARE_NAME }}'
+          STORAGE_ACCOUNT_NAME:  '${{ secrets.STORAGE_ACCOUNT_NAME }}'
+          STORAGE_ACCOUNT_KEY:  '${{ secrets.STORAGE_ACCOUNT_KEY }}'
+
+      

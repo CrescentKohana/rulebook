@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: rulebook-backend
+    hostname: backend
+    build: 
+      context: ./backend
+    environment:
+      # 'url' or 'file' (in case of file)
+      - RULES_TYPE=url
+      # URL or the path to the file. If set to file, /usr/data/rulebook.txt should most likely be used.
+      - RULES_PATH=https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt
+    ports:
+      - '5050:5050' # container:host
+    volumes:
+      - ./data:/usr/data
+    restart: on-failure
+
+  frontend:
+    container_name: rulebook-frontend
+    hostname: frontend
+    build: 
+      context: ./frontend
+      args:
+        - RULEBOOK_API_URL=http://backend:5050/api/v1
+    ports:
+      - '8080:8080' # container:host
+    restart: on-failure

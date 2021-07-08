@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ${REGISTRY_NAME}.azurecr.io/rulebook-backend:latest
+    container_name: rulebook-backend
+    hostname: backend
+    build: 
+      context: ./backend
+    environment:
+      # 'url' or 'file' (in case of file)
+      - RULES_TYPE=url
+      # URL or the path to the file. If set to file, /usr/data/rulebook.txt should most likely be used.
+      - RULES_PATH=https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt
+    ports:
+      - '5050:5050' # container:host
+    volumes:
+      - ${SHARE_NAME}:/usr/data
+    restart: on-failure
+
+  frontend:
+    image: ${REGISTRY_NAME}.azurecr.io/rulebook-frontend:latest
+    container_name: rulebook-frontend
+    hostname: frontend
+    build: 
+      context: ./frontend
+      args:
+        - RULEBOOK_API_URL=http://backend:5050/api/v1
+    ports:
+      - '8080:8080' # container:host
+    restart: on-failure
+
+  
+  caddy:
+    image: caddy:2.4.3-alpine
+    restart: unless-stopped
+    command: caddy reverse-proxy --from ${AZURE_PUBLIC_URL} --to http://frontend:8080
+    domainname: rulebook
+    volumes:
+      - caddy:/data
+    ports:
+      - 80:80
+      - 443:443
+
+volumes:
+  caddy:
+    driver: azure_file
+    driver_opts:
+      share_name: ${SHARE_NAME}
+      storage_account_name: ${STORAGE_ACCOUNT_NAME}
+      storage_account_key: ${STORAGE_ACCOUNT_KEY}
+  rulebookdata:
+    driver: azure_file
+    driver_opts:
+      share_name: ${SHARE_NAME}
+      storage_account_name: ${STORAGE_ACCOUNT_NAME}
+      storage_account_key: ${STORAGE_ACCOUNT_KEY}
