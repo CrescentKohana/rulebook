@@ -10,32 +10,16 @@
   color:rgb(255, 255, 255);
   width: 100%;
   border-top: 2px solid rgb(47, 50, 53);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .main {
-  margin: 60px;
-  flex: 1;
-  justify-content: top;
-  align-items: top;
-}
-
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  margin: 5%;
 }
 
 .row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
 }
 
 .leftColumnWrap {
@@ -52,8 +36,8 @@
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
+  min-width: 200px;
   max-width: 200px;
-
 }
 
 .rightColumn {
@@ -64,5 +48,6 @@
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
-  min-width: calc(100% - 320px);
+  width: 75%;
+  min-height: 100vh;
 }

@@ -48,6 +48,8 @@ Example: `https://rulebook.northeurope.azurecontainer.io:443`.
 
 - **CI_AZURE_CREDENTIALS**: The entire JSON output from the service principal creation step.
 
+- **REPO_GHA_PAT**: Person Access Token with repo scope
+
 ## Requirements
 
 - Docker 3.4+

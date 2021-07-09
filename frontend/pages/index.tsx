@@ -4,12 +4,12 @@ import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 
 import * as types from '../types'
-import styles from '../styles/Layout.module.css'
+import Link from 'next/link'
 import Layout from '../components/Layout'
 
 const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Rulebook</title>
         <meta name="description" content="Rulebook (Next.js / TypeScript)" />
@@ -17,7 +17,17 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): JSX
       </Head>
 
       <Layout chapters={chapters}>
-        <h2>Home</h2>
+        <h1>Rulebook</h1>
+        <p>
+          This frontend is powered by Next.js + TypeScript.
+          The backend parsing and serving the ruleset is written by Go. By Marko Leinikka (2021).
+        </p>
+        <p>
+          Source for the rules (MagicCompRules 20210419.txt):{" "}
+          <Link href='https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt'>
+            <a>wizards.com</a>
+          </Link>
+        </p>
       </Layout>
     </div>
   )
