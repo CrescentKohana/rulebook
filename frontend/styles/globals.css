@@ -8,6 +8,19 @@ body {
 }
 
 a {
+  color: #0c569b;
+  text-decoration: underline dotted 1px;
+  transition: all .05s ease-in;
+  -moz-transition: all .05s ease-in;
+  -o-transition: all .05s ease-in;
+  -webkit-transition: all .05s ease-in;
+}
+
+a:hover, a:focus, a:active {
+  color: #4084c4;
+}
+
+nav a, footer a {
   color: #4da3f3;
   text-decoration: none;
   transition: all .05s ease-in;
@@ -16,7 +29,8 @@ a {
   -webkit-transition: all .05s ease-in;
 }
 
-a:hover, a:focus, a:active {
+
+nav a:hover, nav a:focus, nav a:active {
   color: #4084c4;
 }
 

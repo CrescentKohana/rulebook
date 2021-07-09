@@ -21,7 +21,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ chapters, children }) => {
           <div className={styles.leftColumn}>
             <div className={styles.leftColumnWrap}>
               <div className={typography.header}> 
-                <h1 className={typography.title}><Link href='/'>Rulebook</Link></h1>
+                <h1 className={typography.title}><Link href='/'><a>Rulebook</a></Link></h1>
               </div>
               <Nav chapters={chapters} />
               <Footer />

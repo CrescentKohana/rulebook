@@ -15,7 +15,7 @@ const Chapter = ({ chapters, chapter }: InferGetStaticPropsType<typeof getStatic
   return <Layout chapters={chapters}>
     <h1>{chapter.id}. {chapter.title}</h1>
     {chapter.subchapters.map(
-      (subchapter: types.Subchapter) => <Subchapter key={subchapter.id} data={subchapter} />
+      (subchapter: types.Subchapter) => <Subchapter key={subchapter.id} chapterId={chapter.id} data={subchapter} />
      )}
   </Layout>
 }

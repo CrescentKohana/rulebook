@@ -6,21 +6,17 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 
 ## Documentation
 
-- [README](backend) for **Backend**
-- [README](frontend) for **Frontend**
-- 
+[README](backend) for **Backend**
 
+[README](frontend) for **Frontend**
 
 [docker-compose.yml](docker-compose.yml) for local setups and [docker-compose.aci.yml](docker-compose.aci.yml) for Azure.
-
-**[Specifications](docs/specifications.md)**
 
 ## Local setup
 
 - Get the latest Docker.
 
 - Run `docker compose up --build` in the root directory of the repository.
-
 
 ## Azure / GitHub Actions setup
 
@@ -53,7 +49,7 @@ Example: `https://rulebook.northeurope.azurecontainer.io:443`.
 ## Requirements
 
 - Docker 3.4+
-- [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it) (bundled)
+- [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it) ([bundled](frontend/wait-for-it.sh))
 
 ## Something to improve
 
