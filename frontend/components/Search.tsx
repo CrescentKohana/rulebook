@@ -21,19 +21,21 @@ const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
   const [helperText, sethelperText] = useState("")
 
   const onChange = useCallback(
-    async (event) => {
+    (event) => {
       setQuery(event.target.value)
-      setError(false)
-      sethelperText("")
+      const currentQuery: string = event.target.value
 
-      if (query.length < 3) {
+      if (currentQuery.length < 3) {
         setError(true)
-        sethelperText("At least 3 characers")
+        sethelperText("At least 3 characters")
         setResults([])
         return
       }
 
-      const results = await search(chapters, query)
+      setError(false)
+      sethelperText("")
+
+      const results = search(chapters, currentQuery)
 
       if (results != null && results.length > 0) {
         setResults(results)
@@ -42,7 +44,7 @@ const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
         setResults([])
       }
     },
-    [chapters, query]
+    [chapters]
   )
 
   return (

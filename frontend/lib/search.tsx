@@ -9,7 +9,7 @@ function createSnippet(text: string): string {
   return text.substring(0, 140)
 }
 
-export async function search(chapters: types.Chapter[], searchTerm: string): Promise<types.SearchResult[] | null> {
+export function search(chapters: types.Chapter[], searchTerm: string): types.SearchResult[] | null {
   if (searchTerm.length < 3) {
     return null
   }

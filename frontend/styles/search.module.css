@@ -5,8 +5,17 @@
 
 .results {
   list-style: none;
-  overflow: hidden;
   padding: 0;
+  max-height: calc(50vh);
+  overflow-y: auto;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+/* WebKit */
+.results::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .result {
