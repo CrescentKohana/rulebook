@@ -1,11 +1,10 @@
-import { FunctionComponent } from "react"
 import Link from "next/link"
-import Nav from "./Nav"
-import Footer from "./Footer"
-
+import { FunctionComponent } from "react"
 import styles from "../styles/Layout.module.css"
 import typography from "../styles/Typography.module.css"
 import * as types from "../types"
+import Footer from "./Footer"
+import Nav from "./Nav"
 import SearchPopup from "./SearchPopup"
 
 interface LayoutProps {

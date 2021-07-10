@@ -1,6 +1,6 @@
-import "../styles/globals.css"
-import type { AppProps } from "next/app"
 import { createTheme, ThemeProvider } from "@material-ui/core/styles"
+import type { AppProps } from "next/app"
+import "../styles/globals.css"
 
 const theme = createTheme({
   palette: { type: "dark" },

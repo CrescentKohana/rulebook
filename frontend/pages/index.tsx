@@ -1,12 +1,10 @@
-import { ReactElement } from "react"
-import { GetStaticProps } from "next"
-import { fetchAPI } from "../lib/api"
-import { InferGetStaticPropsType } from "next"
+import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Head from "next/head"
-
-import * as types from "../types"
 import Link from "next/link"
+import { ReactElement } from "react"
 import Layout from "../components/Layout"
+import { fetchAPI } from "../lib/api"
+import * as types from "../types"
 
 const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): ReactElement => {
   return (

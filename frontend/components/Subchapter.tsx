@@ -1,6 +1,6 @@
+import Link from "next/link"
 import { FunctionComponent } from "react"
 import * as types from "../types"
-import Link from "next/link"
 import Rule from "./Rule"
 
 interface SubchapterProps {

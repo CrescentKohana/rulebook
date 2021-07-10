@@ -1,12 +1,10 @@
-import { GetStaticProps, GetStaticPaths } from "next"
-import { fetchAPI } from "../../lib/api"
-import { InferGetStaticPropsType } from "next"
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next"
 import { ParsedUrlQuery } from "querystring"
 import { ReactElement } from "react"
-
-import * as types from "../../types"
 import Layout from "../../components/Layout"
 import Subchapter from "../../components/Subchapter"
+import { fetchAPI } from "../../lib/api"
+import * as types from "../../types"
 
 interface Params extends ParsedUrlQuery {
   id: string

@@ -1,11 +1,11 @@
-import React, { useState, useCallback, FunctionComponent, SyntheticEvent } from "react"
-import Highlighter from "react-highlight-words"
-import { Typography, TextField, Card, CardContent } from "@material-ui/core"
+import { Card, CardContent, TextField, Typography } from "@material-ui/core"
 import LinkIcon from "@material-ui/icons/Link"
 import Link from "next/link"
+import React, { FunctionComponent, SyntheticEvent, useCallback, useState } from "react"
+import Highlighter from "react-highlight-words"
+import { search, SearchResults } from "../lib/search"
 import styles from "../styles/search.module.css"
 import * as types from "../types"
-import { search, SearchResults } from "../lib/search"
 
 interface SearchProps {
   chapters: types.Chapter[]

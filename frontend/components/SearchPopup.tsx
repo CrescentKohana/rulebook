@@ -1,10 +1,9 @@
-import React, { FunctionComponent, useState, useEffect } from "react"
-import Popup from "reactjs-popup"
 import { Button } from "@material-ui/core"
-import Search from "./Search"
-
+import React, { FunctionComponent, useEffect, useState } from "react"
+import Popup from "reactjs-popup"
 import styles from "../styles/search.module.css"
 import * as types from "../types"
+import Search from "./Search"
 
 interface SearchProps {
   chapters: types.Chapter[]

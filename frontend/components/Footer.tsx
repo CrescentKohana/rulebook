@@ -1,5 +1,5 @@
-import { FunctionComponent } from "react"
 import Link from "next/link"
+import { FunctionComponent } from "react"
 import styles from "../styles/Layout.module.css"
 
 const Footer: FunctionComponent = () => {

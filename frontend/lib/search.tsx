@@ -4,11 +4,6 @@ function compare(text: string, term: string): boolean {
   return text.toLowerCase().includes(term.toLowerCase())
 }
 
-// todo: make this dynamic
-function createSnippet(text: string): string {
-  return text // .substring(0, 140)
-}
-
 export interface SearchResults {
   data: types.SearchResult[]
   total: number
@@ -45,7 +40,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
           results.push({
             chapterId: chapter.id,
             comboId: `${subchapter.id}.${rule.id}`,
-            snippet: createSnippet(rule.content),
+            snippet: rule.content,
           })
         }
 
@@ -54,7 +49,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
             results.push({
               chapterId: chapter.id,
               comboId: `${subchapter.id}.${rule.id}${subrule.id}`,
-              snippet: createSnippet(subrule.content),
+              snippet: rule.content,
             })
           }
         })

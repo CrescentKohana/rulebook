@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react"
-import * as types from "../types"
-import styles from "../styles/Rule.module.css"
 import Link from "next/link"
+import { FunctionComponent } from "react"
+import styles from "../styles/Rule.module.css"
+import * as types from "../types"
 import Subrule from "./Subrule"
 
 interface RuleProps {
