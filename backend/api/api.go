@@ -3,11 +3,11 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/Luukuton/rulebook/backend/types"
 )
@@ -20,6 +20,7 @@ type HTTPError struct {
 var rulebook types.Rulebook
 var chaptersOnly types.Rulebook
 
+// Returns one subchapter as JSON.
 func returnSubchapter(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	chapterID, _ := strconv.Atoi(params["id"])
@@ -39,6 +40,7 @@ func returnSubchapter(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnSubchapter ", subchapterID)
 }
 
+// Returns one chapter as JSON.
 func returnChapter(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["id"])
@@ -52,6 +54,8 @@ func returnChapter(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnChapter ", id)
 }
 
+// Returns the whole rulebook as JSON. 
+// If query param 'filter' is set to true, only chapters are included (i.e. no subchapter or rule data).
 func returnRulebook(w http.ResponseWriter, r *http.Request) {
 	filter := r.URL.Query().Get("filter")
 	if filter == "true" {
@@ -63,11 +67,13 @@ func returnRulebook(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnRulebook <filter:", filter, ">")
 }
 
+// Returns the root path as JSON.
 func root(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, `{ "message": "Latest API available at /api/v1/rulebook" }`)
 	fmt.Println("Endpoint Hit: root")
 }
 
+// Handles errors. Currently just 404.
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
@@ -75,6 +81,7 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	}
 }
 
+// Handles HTTP requests.
 func handleRequests() {
 	baseURL := "/api/v1"
 	r := mux.NewRouter().StrictSlash(true)
@@ -90,9 +97,10 @@ func handleRequests() {
 		json.NewEncoder(w).Encode(HTTPError{Code: http.StatusNotFound, Message: http.StatusText(http.StatusNotFound)})
 	})
 
-	log.Fatal(http.ListenAndServe(":5050", r))
+	log.Error(http.ListenAndServe(":5050", r))
 }
 
+// Starts API server.
 func StartAPI(rulebookArg types.Rulebook) {
 	rulebook = rulebookArg
 

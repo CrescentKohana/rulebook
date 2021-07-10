@@ -3,29 +3,32 @@ package utils
 import (
 	"bufio"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"regexp"
 	"strconv"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/Luukuton/rulebook/backend/types"
 )
 
-func ParseTextToRulebook(filePath string) types.Rulebook {
+// Parses given text file to structs defined in types/rulebook.go.
+func ParseTextToRulebook(filePath string) *types.Rulebook {
 	file, err := os.Open(filePath)
 
+	rulebook := types.Rulebook{Chapters: []types.Chapter{}}
+
 	if err != nil {
-		log.Fatal(err)
+		log.Error(err)
+		return &rulebook
 	}
 
 	defer file.Close()
 
-	rulebook := types.Rulebook{Chapters: []types.Chapter{}}
-
 	scanner := bufio.NewScanner(file)
 
+	// Pre-compiled regex
 	var chapterR = regexp.MustCompile(`^(\d)\.\s(.*)$`)
 	var subchapterR = regexp.MustCompile(`^(\d{3})\.\s(.*)$`)
 	var ruleR = regexp.MustCompile(`^\d{3}\.(\d{1,3})\.\s(.*)$`)
@@ -51,7 +54,7 @@ func ParseTextToRulebook(filePath string) types.Rulebook {
 
 		// Done. No need to parse glossary nor credits.
 		if !blocking && line == "Glossary" {
-			return rulebook
+			return &rulebook
 		}
 
 		// Skips the beginning and empty lines.
@@ -137,24 +140,24 @@ func ParseTextToRulebook(filePath string) types.Rulebook {
 		}
 	}
 
-	return rulebook
+	return &rulebook
 }
 
-func ParseJSON() *types.Rulebook {
-	jsonFile, err := os.Open("/data/rulebook.json")
+// Parses and unmarshals a given JSON file.
+func ParseJSON(filePath string) *types.Rulebook {
+	jsonFile, err := os.Open(filePath)
+
+	var rulebook types.Rulebook
 
 	if err != nil {
-		fmt.Println(err)
-		jsonFile.Close()
-		return nil
+		log.Error(err)
+		return &rulebook
 	}
 
 	defer jsonFile.Close()
 
 	// Reads opened JSON file as a byte array.
 	byteValue, _ := ioutil.ReadAll(jsonFile)
-
-	var rulebook types.Rulebook
 
 	json.Unmarshal(byteValue, &rulebook)
 

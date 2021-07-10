@@ -1,8 +1,8 @@
 # Frontend
 
-Made with TypeScript + Next.js. Utilizes server side rendering. 
+Made with TypeScript + Next.js. Utilizes server side rendering.
 
-Every page (chapter) available during build-time and navigation is rendered beforehand by the server. In addition, everything is rerendered by the server periodically. Any new chapters (not available during build-time) will be rendered by the server on the first request blocking the view for the duration of the render (talking about milliseconds here).
+Navigation and every page (chapter) available during build-time are rendered beforehand by the server. In addition, rerendering occurs periodically afterwards. Any new chapters (not available during build-time) will be rendered by the server on the first request blocking the view for the duration of the render (talking about milliseconds here).
 
 ## Usage
 
@@ -14,5 +14,6 @@ The backend has to be up and running before trying to build the site!
 
 ### Dependencies
 
-- nodejs v14.16.0+ (LTS)
-- npm latest (tested with 7.4.2)
+- nodejs v14.17.1+ (LTS)
+- npm (tested with 7.19.1+)
+- [backend](../backend)

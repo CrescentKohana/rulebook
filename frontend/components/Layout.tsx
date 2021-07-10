@@ -1,5 +1,6 @@
+import { Typography } from "@material-ui/core"
 import Link from "next/link"
-import { FunctionComponent } from "react"
+import { FC } from "react"
 import styles from "../styles/Layout.module.css"
 import typography from "../styles/Typography.module.css"
 import * as types from "../types"
@@ -8,11 +9,12 @@ import Nav from "./Nav"
 import SearchPopup from "./SearchPopup"
 
 interface LayoutProps {
+  pageTitle: string
   chapters: types.Chapter[]
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
-const Layout: FunctionComponent<LayoutProps> = ({ chapters, children }) => {
+const Layout: FC<LayoutProps> = ({ pageTitle, chapters, children }) => {
   return (
     <>
       <div className={styles.main}>
@@ -33,7 +35,12 @@ const Layout: FunctionComponent<LayoutProps> = ({ chapters, children }) => {
               <Footer />
             </div>
           </div>
-          <div className={styles.rightColumn}>{children}</div>
+          <div className={styles.rightColumn}>
+            <Typography variant="h3" align="center">
+              {pageTitle}
+            </Typography>
+            {children}
+          </div>
         </div>
       </div>
     </>

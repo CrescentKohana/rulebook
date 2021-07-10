@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core"
-import React, { FunctionComponent, useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import Popup from "reactjs-popup"
 import styles from "../styles/search.module.css"
 import * as types from "../types"
@@ -9,7 +9,7 @@ interface SearchProps {
   chapters: types.Chapter[]
 }
 
-const SearchPopup: FunctionComponent<SearchProps> = ({ chapters }) => {
+const SearchPopup: FC<SearchProps> = ({ chapters }) => {
   const [open, setOpen] = useState(false)
   const closePopup = () => setOpen(false)
 

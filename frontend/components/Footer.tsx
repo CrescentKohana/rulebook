@@ -1,8 +1,8 @@
 import Link from "next/link"
-import { FunctionComponent } from "react"
+import { FC } from "react"
 import styles from "../styles/Layout.module.css"
 
-const Footer: FunctionComponent = () => {
+const Footer: FC = () => {
   return (
     <footer id={styles.footer}>
       <Link href="https://github.com/Luukuton/rulebook">

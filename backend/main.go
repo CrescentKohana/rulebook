@@ -10,6 +10,7 @@ import (
 	"github.com/Luukuton/rulebook/backend/utils"
 )
 
+// Downloads a file from the given url to the given filepath. Used to get rule data from the internet.
 func DownloadFile(filepath string, url string) error {
 	response, err := http.Get(url)
 	if err != nil {
@@ -27,9 +28,9 @@ func DownloadFile(filepath string, url string) error {
 	return err
 }
 
+// Main function. Handles CLI arguments and starts the server.
 func main() {
-	var rulebook types.Rulebook
-	parsed := false
+	var rulebook *types.Rulebook
 
 	if len(os.Args) >= 3 {
 		if os.Args[1] == "url" {
@@ -37,25 +38,20 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
+
 			println("Downloaded: " + os.Args[2])
 
 			rulebook = utils.ParseTextToRulebook("/usr/data/rulebook_downloaded.txt")
-			parsed = true
 		} else if os.Args[1] == "file" {
 			rulebook = utils.ParseTextToRulebook(os.Args[2])
-			parsed = true
 		}
-	}
-
-	if !parsed {
-		println("No source specified. Trying default file data/rulebook.txt")
-		rulebook = utils.ParseTextToRulebook("data/rulebook.txt")
 	}
 
 	if len(rulebook.Chapters) != 0 {
 		println("Successfully parsed rules. Starting backend...")
-		api.StartAPI(rulebook)
 	} else {
-		println("Parsing failed. Stopping backend...")
+		println("Parsing failed. Starting backend anyway...")
 	}
+
+	api.StartAPI(*rulebook)
 }

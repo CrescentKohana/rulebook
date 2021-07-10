@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 import Head from "next/head"
 import Link from "next/link"
@@ -15,18 +16,17 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout chapters={chapters}>
-        <h1>Rulebook</h1>
-        <p>
+      <Layout pageTitle="Rulebook" chapters={chapters}>
+        <Typography variant="body1" paragraph={true} align="left">
           This frontend is powered by Next.js + TypeScript. The backend parsing and serving the ruleset is written by
           Go. By Marko Leinikka (2021).
-        </p>
-        <p>
+        </Typography>
+        <Typography variant="body1" paragraph={true} align="left">
           Source for the rules (MagicCompRules 20210419.txt):{" "}
           <Link href="https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt">
             <a>wizards.com</a>
           </Link>
-        </p>
+        </Typography>
       </Layout>
     </div>
   )

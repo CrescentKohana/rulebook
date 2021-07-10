@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FunctionComponent } from "react"
+import { FC } from "react"
 
 interface SubruleProps {
   id: string
@@ -9,7 +9,7 @@ interface SubruleProps {
   ruleId: number
 }
 
-const Subrule: FunctionComponent<SubruleProps> = ({ id, content, chapterId, subchapterId, ruleId }: SubruleProps) => {
+const Subrule: FC<SubruleProps> = ({ id, content, chapterId, subchapterId, ruleId }: SubruleProps) => {
   return (
     <div id={`${subchapterId}.${ruleId}${id}`}>
       <Link href={`/chapter/${chapterId}#${subchapterId}.${ruleId}${id}`}>

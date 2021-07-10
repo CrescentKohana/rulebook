@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FunctionComponent } from "react"
+import { FC } from "react"
 import * as types from "../types"
 import Rule from "./Rule"
 
@@ -8,7 +8,7 @@ interface SubchapterProps {
   chapterId: number
 }
 
-const Subchapter: FunctionComponent<SubchapterProps> = ({ data, chapterId }: SubchapterProps) => {
+const Subchapter: FC<SubchapterProps> = ({ data, chapterId }: SubchapterProps) => {
   return (
     <div id={`${data.id}`}>
       <Link href={`/chapter/${chapterId}#${data.id}`}>

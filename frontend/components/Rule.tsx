@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FunctionComponent } from "react"
+import { FC } from "react"
 import styles from "../styles/Rule.module.css"
 import * as types from "../types"
 import Subrule from "./Subrule"
@@ -10,7 +10,7 @@ interface RuleProps {
   subchapterId: number
 }
 
-const Rule: FunctionComponent<RuleProps> = ({ data, chapterId, subchapterId }: RuleProps) => {
+const Rule: FC<RuleProps> = ({ data, chapterId, subchapterId }: RuleProps) => {
   return (
     <div id={`${subchapterId}.${data.id}`} className={styles.rule}>
       <Link href={`/chapter/${chapterId}#${subchapterId}.${data.id}`}>

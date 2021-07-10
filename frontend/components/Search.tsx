@@ -1,7 +1,7 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core"
 import LinkIcon from "@material-ui/icons/Link"
 import Link from "next/link"
-import React, { FunctionComponent, SyntheticEvent, useCallback, useState } from "react"
+import { FC, SyntheticEvent, useCallback, useState } from "react"
 import Highlighter from "react-highlight-words"
 import { search, SearchResults } from "../lib/search"
 import styles from "../styles/search.module.css"
@@ -14,7 +14,7 @@ interface SearchProps {
     | undefined
 }
 
-const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
+const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const defaultResults: SearchResults = { data: [], shown: 0, total: 0 }
   const [results, setResults] = useState(defaultResults)
