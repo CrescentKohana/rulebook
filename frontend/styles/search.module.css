@@ -1,0 +1,27 @@
+.container {
+  width: 50vw;
+  margin: 100px 0 0 0;
+}
+
+.results {
+  list-style: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+.result {
+  margin-bottom: 10px;
+}
+
+.result a {
+  text-decoration: none;
+}
+
+.searchField {
+  background-color: rgb(23, 26, 29);
+  border-radius: 2px;
+}
+
+.linkIcon {
+  float: right;
+}

@@ -1,25 +1,37 @@
-import * as types from '../types'
-import styles from '../styles/Rule.module.css'
-import Link from 'next/link'
+import { FunctionComponent } from "react"
+import * as types from "../types"
+import styles from "../styles/Rule.module.css"
+import Link from "next/link"
+import Subrule from "./Subrule"
 
-interface Props {
+interface RuleProps {
   data: types.Rule
   chapterId: number
-  subId: number
+  subchapterId: number
 }
 
-export default function Rule({ data, chapterId, subId }: Props): JSX.Element {
-  return <div id={`${subId}.${data.id}`} className={styles.rule}>
-    <Link href={`/chapter/${chapterId}#${subId}.${data.id}`}><a>{data.id}:</a></Link>
-    {" "} {data.content}
-    <div className={styles.subrules}>
-      {Object.entries(data.subrules).map(([key, value]) => (
-        <div key={key} id={`${subId}.${data.id}${key}`}>
-          <Link href={`/chapter/${chapterId}#${subId}.${data.id}${key}`}><a>{key}.</a></Link>
-          {" "}{value}
-        </div>
-      ))}
+const Rule: FunctionComponent<RuleProps> = ({ data, chapterId, subchapterId }: RuleProps) => {
+  return (
+    <div id={`${subchapterId}.${data.id}`} className={styles.rule}>
+      <Link href={`/chapter/${chapterId}#${subchapterId}.${data.id}`}>
+        <a>{data.id}:</a>
+      </Link>{" "}
+      {data.content}
+      <div className={styles.subrules}>
+        {data.subrules.map((subrule) => (
+          <Subrule
+            key={subrule.id}
+            id={subrule.id}
+            content={subrule.content}
+            chapterId={chapterId}
+            subchapterId={subchapterId}
+            ruleId={data.id}
+          />
+        ))}
+      </div>
+      <br />
     </div>
-    <br/>
- </div>
+  )
 }
+
+export default Rule

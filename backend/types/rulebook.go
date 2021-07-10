@@ -17,7 +17,12 @@ type Subchapter struct {
 }
 
 type Rule struct {
-	ID       int               `json:"id"`
-	Content  string            `json:"content"`
-	Subrules map[string]string `json:"subrules"`
+	ID       int       `json:"id"`
+	Content  string    `json:"content"`
+	Subrules []Subrule `json:"subrules"`
+}
+
+type Subrule struct {
+	ID      string `json:"id"`
+	Content string `json:"content"`
 }

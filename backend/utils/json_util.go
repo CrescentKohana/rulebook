@@ -92,7 +92,7 @@ func ParseTextToRulebook(filePath string) types.Rulebook {
 			capture := ruleR.FindStringSubmatch(line)
 			id, _ := strconv.Atoi(capture[1])
 
-			rule := types.Rule{ID: id, Content: capture[2], Subrules: map[string]string{}}
+			rule := types.Rule{ID: id, Content: capture[2], Subrules: []types.Subrule{}}
 			rules := rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules
 			rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules = append(rules, rule)
 			currentRule = id - 1
@@ -105,11 +105,11 @@ func ParseTextToRulebook(filePath string) types.Rulebook {
 		matched = subruleR.MatchString(line)
 		if matched {
 			capture := subruleR.FindStringSubmatch(line)
-			subruleID := capture[1]
-			subrule := capture[2]
 
-			rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules[subruleID] += subrule
-			currentSubrule = subruleID
+			subrule := types.Subrule{ID: capture[1], Content: capture[2]}
+			subrules := rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules
+			rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules = append(subrules, subrule)
+			currentSubrule = capture[1]
 
 			prevLine = "SUBRULE"
 			continue
@@ -125,7 +125,12 @@ func ParseTextToRulebook(filePath string) types.Rulebook {
 			case "RULE":
 				rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Content += extra
 			case "SUBRULE":
-				rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules[currentSubrule] += extra
+				for index, subrule := range rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules {
+					if subrule.ID == currentSubrule {
+						rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules[index].Content += extra
+						break
+					}
+				}
 			}
 
 			continue

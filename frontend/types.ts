@@ -23,5 +23,16 @@ export interface Subchapter {
 export interface Rule {
   id: number
   content: string
-  subrules: Array<[string, string]>
+  subrules: Subrule[]
+}
+
+export interface Subrule {
+  id: string
+  content: string
+}
+
+export interface SearchResult {
+  chapterId: number
+  comboId: string
+  snippet: string
 }
