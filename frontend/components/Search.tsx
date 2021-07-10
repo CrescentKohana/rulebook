@@ -20,7 +20,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
   const [results, setResults] = useState(defaultResults)
   const [query, setQuery] = useState("")
   const [error, setError] = useState(false)
-  const [helperText, sethelperText] = useState("")
+  const [helperText, sethelperText] = useState("Format for finding an exact rule: 100.1a")
 
   const onChange = useCallback(
     (event) => {
@@ -29,7 +29,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
 
       if (currentQuery.length < 3) {
         setError(true)
-        sethelperText("At least 3 characters")
+        sethelperText("At least 3 characters.")
         setResults(defaultResults)
         return
       }
@@ -54,7 +54,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
     <div className={styles.container}>
       <TextField
         id="filled-basic"
-        label="Search rules"
+        label="Search for rules"
         variant="filled"
         fullWidth={true}
         className={styles.searchField}
