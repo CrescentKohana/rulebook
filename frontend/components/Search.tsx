@@ -1,10 +1,11 @@
 import React, { useState, useCallback, FunctionComponent, SyntheticEvent } from "react"
+import Highlighter from "react-highlight-words"
 import { Typography, TextField, Card, CardContent } from "@material-ui/core"
 import LinkIcon from "@material-ui/icons/Link"
 import Link from "next/link"
 import styles from "../styles/search.module.css"
 import * as types from "../types"
-import { search } from "../lib/search"
+import { search, SearchResults } from "../lib/search"
 
 interface SearchProps {
   chapters: types.Chapter[]
@@ -14,7 +15,8 @@ interface SearchProps {
 }
 
 const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
-  const defaultResults: types.SearchResult[] = []
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const defaultResults: SearchResults = { data: [], shown: 0, total: 0 }
   const [results, setResults] = useState(defaultResults)
   const [query, setQuery] = useState("")
   const [error, setError] = useState(false)
@@ -28,7 +30,7 @@ const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
       if (currentQuery.length < 3) {
         setError(true)
         sethelperText("At least 3 characters")
-        setResults([])
+        setResults(defaultResults)
         return
       }
 
@@ -37,14 +39,15 @@ const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
 
       const results = search(chapters, currentQuery)
 
-      if (results != null && results.length > 0) {
+      if (results != null && results.total > 0) {
         setResults(results)
+        sethelperText(`Showing ${results.shown} out of ${results.total} results.`)
       } else {
         sethelperText("No results")
-        setResults([])
+        setResults(defaultResults)
       }
     },
-    [chapters]
+    [chapters, defaultResults]
   )
 
   return (
@@ -61,31 +64,33 @@ const Search: FunctionComponent<SearchProps> = ({ chapters, closePopup }) => {
         value={query}
       />
 
-      {results.length > 0 && (
-        <ul className={styles.results}>
-          {results.map(({ chapterId, comboId, snippet }) => (
-            <li key={`${chapterId}#${comboId}`} className={styles.result}>
-              <Link href={`/chapter/${chapterId}#${comboId}`}>
-                <a onClick={closePopup}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="h6">
-                        {comboId + " "}
-                        <Typography color="textSecondary" display="inline">
-                          Chapter {chapterId}
+      {results.total > 0 && (
+        <>
+          <ul className={styles.results}>
+            {results.data.map(({ chapterId, comboId, snippet }) => (
+              <li key={`${chapterId}#${comboId}`} className={styles.result}>
+                <Link href={`/chapter/${chapterId}#${comboId}`}>
+                  <a onClick={closePopup}>
+                    <Card>
+                      <CardContent>
+                        <Typography variant="h6">
+                          {comboId + " "}
+                          <Typography color="textSecondary" display="inline">
+                            Chapter {chapterId}
+                          </Typography>
+                          <LinkIcon color="primary" className={styles.linkIcon} />
                         </Typography>
-                        <LinkIcon color="primary" className={styles.linkIcon} />
-                      </Typography>
-                      <Typography variant="body2" component="p">
-                        {snippet}...
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </a>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                        <Typography variant="body2" component="p">
+                          <Highlighter searchWords={[query]} autoEscape={true} textToHighlight={snippet} />
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   )

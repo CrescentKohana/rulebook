@@ -6,10 +6,16 @@ function compare(text: string, term: string): boolean {
 
 // todo: make this dynamic
 function createSnippet(text: string): string {
-  return text.substring(0, 140)
+  return text // .substring(0, 140)
 }
 
-export function search(chapters: types.Chapter[], searchTerm: string): types.SearchResult[] | null {
+export interface SearchResults {
+  data: types.SearchResult[]
+  total: number
+  shown: number
+}
+
+export function search(chapters: types.Chapter[], searchTerm: string): SearchResults | null {
   if (searchTerm.length < 3) {
     return null
   }
@@ -56,5 +62,8 @@ export function search(chapters: types.Chapter[], searchTerm: string): types.Sea
     })
   })
 
-  return results.slice(0, 10)
+  const total: number = results.length
+  const shown = total < 20 ? total : 20
+
+  return { data: results.slice(0, shown), total, shown }
 }
