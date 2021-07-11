@@ -4,6 +4,7 @@ import { ReactElement } from "react"
 import Layout from "../../components/Layout"
 import Subchapter from "../../components/Subchapter"
 import { fetchAPI } from "../../lib/api"
+import { addReferences } from "../../lib/references"
 import * as types from "../../types"
 import Custom404 from "../404"
 
@@ -42,7 +43,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const params = context.params as Params
 
   const rulebook = await fetchAPI("/")
-  const chapters: types.Chapter[] = rulebook.chapters
+  const chapters: types.Chapter[] = addReferences(rulebook.chapters)
   const chapter: types.Chapter = chapters[Number(params.slug) - 1] || null
 
   return {

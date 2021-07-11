@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { FC } from "react"
+import { keepLinks } from "../lib/sanitizers"
 import styles from "../styles/Rule.module.css"
 import * as types from "../types"
 import Subrule from "./Subrule"
@@ -16,17 +17,10 @@ const Rule: FC<RuleProps> = ({ data, chapterId, subchapterId }: RuleProps) => {
       <Link href={`/chapter/${chapterId}#${subchapterId}.${data.id}`}>
         <a>{data.id}:</a>
       </Link>{" "}
-      {data.content}
+      <span dangerouslySetInnerHTML={{ __html: keepLinks(data.content) }} />
       <div className={styles.subrules}>
         {data.subrules.map((subrule) => (
-          <Subrule
-            key={subrule.id}
-            id={subrule.id}
-            content={subrule.content}
-            chapterId={chapterId}
-            subchapterId={subchapterId}
-            ruleId={data.id}
-          />
+          <Subrule key={subrule.id} data={subrule} chapterId={chapterId} subchapterId={subchapterId} ruleId={data.id} />
         ))}
       </div>
       <br />

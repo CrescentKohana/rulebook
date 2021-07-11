@@ -3,6 +3,7 @@ import LinkIcon from "@material-ui/icons/Link"
 import Link from "next/link"
 import { FC, SyntheticEvent, useCallback, useState } from "react"
 import Highlighter from "react-highlight-words"
+import { sanitize } from "../lib/sanitizers"
 import { search, SearchResults } from "../lib/search"
 import styles from "../styles/search.module.css"
 import * as types from "../types"
@@ -81,7 +82,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
                           <LinkIcon color="primary" className={styles.linkIcon} />
                         </Typography>
                         <Typography variant="body2" component="p">
-                          <Highlighter searchWords={[query]} autoEscape={true} textToHighlight={snippet} />
+                          <Highlighter searchWords={[query]} autoEscape={true} textToHighlight={sanitize(snippet)} />
                         </Typography>
                       </CardContent>
                     </Card>

@@ -1,21 +1,22 @@
 import Link from "next/link"
 import { FC } from "react"
+import { keepLinks } from "../lib/sanitizers"
+import * as types from "../types"
 
 interface SubruleProps {
-  id: string
-  content: string
+  data: types.Subrule
   chapterId: number
   subchapterId: number
   ruleId: number
 }
 
-const Subrule: FC<SubruleProps> = ({ id, content, chapterId, subchapterId, ruleId }: SubruleProps) => {
+const Subrule: FC<SubruleProps> = ({ data, chapterId, subchapterId, ruleId }: SubruleProps) => {
   return (
-    <div id={`${subchapterId}.${ruleId}${id}`}>
-      <Link href={`/chapter/${chapterId}#${subchapterId}.${ruleId}${id}`}>
-        <a>{id}.</a>
+    <div id={`${subchapterId}.${ruleId}${data.id}`}>
+      <Link href={`/chapter/${chapterId}#${subchapterId}.${ruleId}${data.id}`}>
+        <a>{data.id}.</a>
       </Link>{" "}
-      {content}
+      <span dangerouslySetInnerHTML={{ __html: keepLinks(data.content) }} />
     </div>
   )
 }
