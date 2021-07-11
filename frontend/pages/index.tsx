@@ -12,8 +12,6 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
     <div>
       <Head>
         <title>Rulebook</title>
-        <meta name="description" content="Rulebook (Next.js / TypeScript)" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Layout pageTitle="Rulebook" chapters={chapters}>
@@ -33,7 +31,7 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const rulebook = await fetchAPI("/")
+  const rulebook = await fetchAPI("/chapters")
   const chapters: types.Chapter[] = rulebook.chapters
 
   return {

@@ -7,7 +7,8 @@ import * as types from "../types"
  * @returns API URL as string
  */
 export function getAPIURL(path = ""): string {
-  return `${process.env.RULEBOOK_API_URL}/chapters${path}`
+  const apiURL = process.env.RULEBOOK_API_URL || "http://localhost:5050/api/v1"
+  return `${apiURL}${path}`
 }
 
 /**
