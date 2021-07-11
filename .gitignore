@@ -1,7 +1,9 @@
 data/*
+
+# build executables
 backend/backend
 backend/backend.exe
-nginx/
-rulebook.txt
+
+# secrets during testing
 .env.secrets
-docker-compose-secret.yml
+docker-compose.secret.yml

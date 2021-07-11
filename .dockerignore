@@ -1,8 +1,8 @@
-.git/
+.git
 .gitignore
-.next/
 .dockerignore
-Dockerfile
 docker-compose.yml
-node_modules/
-
+docker-compose.aci.yml
+docker-compose.secret.yml
+data
+docs

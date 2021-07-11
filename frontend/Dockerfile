@@ -1,14 +1,22 @@
-FROM node:14-alpine
-
-# ARG RULEBOOK_API_URL
-ENV RULEBOOK_API_URL=http://backend:5050/api/v1
+FROM node:14-alpine as deps
 
 WORKDIR /usr/app
-COPY . .
 
-RUN npm install npm@latest -g && npm install && apk add bash && chmod +x wait-for-it.sh
+# Copies only package.json and lock file to avoid rebuilds if the package.json hasn’t changed.
+COPY package.json package-lock.json ./
+RUN npm install npm@latest -g && npm install
+
+FROM node:14-alpine
+
+ENV RULEBOOK_API_URL=http://backend:5050/api/v1
+ENV NODE_ENV=production
+
+WORKDIR /usr/app
+
+COPY . .
+COPY --from=deps /usr/app /usr/app
+
+RUN apk add bash && chmod +x wait-for-it.sh
 
 EXPOSE 8080
-
-# Waits for the backend before building as it's needed for server side rendering.
-CMD ["./wait-for-it.sh", "backend:5050", "--timeout=5", "--", "npm", "run", "docker"]
+CMD ["./wait-for-it.sh", "backend:5050", "--timeout=15", "--", "npm", "run", "docker"]
