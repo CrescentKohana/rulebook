@@ -4,17 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/Luukuton/rulebook/backend/types"
+	"github.com/Luukuton/rulebook/backend/utils"
 )
 
 type HTTPError struct {
 	Code    int
 	Message string
+}
+
+type FormData struct {
+	URL string
 }
 
 var rulebook types.Rulebook
@@ -32,12 +38,12 @@ func returnSubchapter(w http.ResponseWriter, r *http.Request) {
 	tooSmall := chapterID < 1 || subchapterID < 0
 	tooLarge := chapterID > len(rulebook.Chapters) || subchapterID > len(rulebook.Chapters[chapterID-1].Subchapters)-1
 	if tooSmall || tooLarge {
-		errorHandler(w, r, http.StatusNotFound)
+		errorHandler(w, r, http.StatusNotFound, "")
 		return
 	}
 
 	json.NewEncoder(w).Encode(rulebook.Chapters[chapterID-1].Subchapters[subchapterID])
-	fmt.Println("Endpoint Hit: returnSubchapter ", subchapterID)
+	println("Endpoint Hit: returnSubchapter ", subchapterID)
 }
 
 // Returns one chapter as JSON.
@@ -46,12 +52,12 @@ func returnChapter(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(params["id"])
 
 	if id < 1 || id > len(rulebook.Chapters) {
-		errorHandler(w, r, http.StatusNotFound)
+		errorHandler(w, r, http.StatusNotFound, "")
 		return
 	}
 
 	json.NewEncoder(w).Encode(rulebook.Chapters[id-1])
-	fmt.Println("Endpoint Hit: returnChapter ", id)
+	log.Println("Endpoint Hit: returnChapter ", id)
 }
 
 // Returns the whole rulebook as JSON. 
@@ -64,21 +70,66 @@ func returnRulebook(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(rulebook)
 	}
 
-	fmt.Println("Endpoint Hit: returnRulebook <filter:", filter, ">")
+	log.Println("Endpoint Hit: returnRulebook <filter:", filter, ">")
+}
+
+func newRulebook(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var formData FormData
+	err := decoder.Decode(&formData)
+	if err != nil || formData.URL == "" {
+		errorHandler(w, r, http.StatusBadRequest, "missing url body parameter")
+		return
+	}
+
+	urlParsed, err := url.ParseRequestURI(formData.URL)
+	if err != nil {
+		errorHandler(w, r, http.StatusBadRequest, "malformed url body parameter")
+		return
+	}
+
+	path, err := utils.DownloadFile(urlParsed.String(), "rulebook_runtime_download.txt")
+	if err != nil {
+		errorHandler(w, r, http.StatusBadRequest, "invalid url body parameter or its content was malformed")
+		return
+	}
+
+	newRulebook := *utils.ParseTextToRulebook(path)
+	if len(newRulebook.Chapters) == 0 {
+		errorHandler(w, r, http.StatusBadRequest, "invalid url body parameter or its content was malformed")
+		return
+	}
+
+	// Replace data
+	rulebook = newRulebook
+
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintf(w, `{ "code": %d, "message": "new rulebook data added" }`, http.StatusCreated)
+	log.Println("Endpoint Hit: newRulebook with URL:", urlParsed)
 }
 
 // Returns the root path as JSON.
 func root(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `{ "message": "Latest API available at /api/v1/rulebook" }`)
-	fmt.Println("Endpoint Hit: root")
+	fmt.Fprintf(w, `{ "message": "Latest Rulebook API available at /api/v1/chapters" }`)
+	log.Println("Endpoint Hit: root")
 }
 
-// Handles errors. Currently just 404.
-func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
-	w.WriteHeader(status)
-	if status == http.StatusNotFound {
-		fmt.Fprint(w, `{ "code": 404, "message": "Not Found" }`)
-	}
+// Handles errors. Argument msg is only used with bad requests
+func errorHandler(w http.ResponseWriter, r *http.Request, status int, msg string) {
+	switch status {
+	case http.StatusNotFound:
+		w.WriteHeader(status)
+		fmt.Fprintf(w, `{ "code": %d, "message": "not found" }`, status)
+	case http.StatusBadRequest:
+		w.WriteHeader(status)
+		fmt.Fprintf(w, `{ "code": %d, "message": "%s" }`, status, msg)
+	case http.StatusForbidden:
+		w.WriteHeader(status)
+		fmt.Fprintf(w, `{ "code": %d, "message": "forbidden" }`, status)
+	default:
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, `{ "code": %d, "message": "internal server error" }`, http.StatusInternalServerError)
+	} 
 }
 
 // Handles HTTP requests.
@@ -89,6 +140,7 @@ func handleRequests() {
 	// Routers
 	r.HandleFunc("/", root).Methods("GET")
 	r.HandleFunc(baseURL+"/chapters", returnRulebook).Methods("GET")
+	r.HandleFunc(baseURL+"/chapters", newRulebook).Methods("POST")
 	r.HandleFunc(baseURL+"/chapters/{id:[1-9][0-9]*}", returnChapter).Methods("GET")
 	r.HandleFunc(baseURL+"/chapters/{id:[1-9][0-9]*}/{subid:[1-9][0-9]{2}}", returnSubchapter).Methods("GET")
 

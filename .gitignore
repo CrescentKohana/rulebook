@@ -1,4 +1,5 @@
 data/*
+backend/rest/
 
 # build executables
 backend/backend

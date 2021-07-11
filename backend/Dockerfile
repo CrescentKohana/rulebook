@@ -13,5 +13,4 @@ RUN mkdir /usr/data
 COPY --from=build-stage /go/bin/rulebook-backend /go/bin/rulebook-backend
 
 EXPOSE 5050
-
-CMD [ "sh", "-c", "go/bin/rulebook-backend ${RULES_TYPE} ${RULES_PATH}" ]
+CMD [ "sh", "-c", "go/bin/rulebook-backend ${RULES_TYPE} ${RULES_PATH} /usr/data/" ]

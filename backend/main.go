@@ -1,56 +1,43 @@
 package main
 
 import (
-	"io"
-	"net/http"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/Luukuton/rulebook/backend/api"
 	"github.com/Luukuton/rulebook/backend/types"
 	"github.com/Luukuton/rulebook/backend/utils"
 )
 
-// Downloads a file from the given url to the given filepath. Used to get rule data from the internet.
-func DownloadFile(filepath string, url string) error {
-	response, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer response.Body.Close()
-
-	output, err := os.Create(filepath)
-	if err != nil {
-		return err
-	}
-	defer output.Close()
-
-	_, err = io.Copy(output, response.Body)
-	return err
-}
-
 // Main function. Handles CLI arguments and starts the server.
 func main() {
 	var rulebook *types.Rulebook
 
+	if len(os.Args) >= 4 {
+		log.Println("Data dir set:",  os.Args[3])
+		utils.DataPath = os.Args[3]
+	}
+
 	if len(os.Args) >= 3 {
 		if os.Args[1] == "url" {
-			err := DownloadFile("/usr/data/rulebook_downloaded.txt", os.Args[2])
+			path, err := utils.DownloadFile(os.Args[2], "rulebook_initial_download.txt")
 			if err != nil {
-				panic(err)
+				log.Println(err)
+			} else {
+				log.Println("Initial download:", path)
+				rulebook = utils.ParseTextToRulebook(path)
 			}
-
-			println("Downloaded: " + os.Args[2])
-
-			rulebook = utils.ParseTextToRulebook("/usr/data/rulebook_downloaded.txt")
 		} else if os.Args[1] == "file" {
+			log.Println("Initial file:",  os.Args[2])
 			rulebook = utils.ParseTextToRulebook(os.Args[2])
 		}
 	}
 
 	if len(rulebook.Chapters) != 0 {
-		println("Successfully parsed rules. Starting backend...")
+		log.Println("Initial rule parsing succeeded. Starting backend...")
 	} else {
-		println("Parsing failed. Starting backend anyway...")
+		log.Println("Initial rule parsing failed. Starting backend anyway...")
 	}
 
 	api.StartAPI(*rulebook)

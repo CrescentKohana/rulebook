@@ -54,7 +54,7 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 
 		// Done. No need to parse glossary nor credits.
 		if !blocking && line == "Glossary" {
-			return &rulebook
+			break
 		}
 
 		// Skips the beginning and empty lines.
@@ -138,6 +138,19 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 
 			continue
 		}
+	}
+
+	if len(rulebook.Chapters) > 0 {
+		// Rename temporary file
+		err := os.Rename(filePath, DataPath + "rulebook_runtime_download.txt")
+		if err != nil {
+			log.Println(err)
+		}
+	}
+
+	if filePath == (DataPath + "temp.txt") {
+		file.Close()
+		os.Remove(filePath)
 	}
 
 	return &rulebook

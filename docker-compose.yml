@@ -7,9 +7,9 @@ services:
     build: 
       context: ./backend
     environment:
-      # 'url' or 'file' (in case of file)
+      # 'url' or 'file'
       - RULES_TYPE=url
-      # URL or the path to the file. If set to file, /usr/data/rulebook.txt should most likely be used.
+      # URL or the path to the file. Example for a file: /usr/data/rulebook.txt
       - RULES_PATH=https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt
     ports:
       - '5050:5050' # container:host
