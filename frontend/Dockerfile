@@ -6,7 +6,7 @@ ENV RULEBOOK_API_URL=http://backend:5050/api/v1
 WORKDIR /usr/app
 COPY . .
 
-RUN npm install && apk add bash && chmod +x wait-for-it.sh
+RUN npm install npm@latest -g && npm install && apk add bash && chmod +x wait-for-it.sh
 
 EXPOSE 8080
 
