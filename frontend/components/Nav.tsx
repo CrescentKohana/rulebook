@@ -13,7 +13,7 @@ const Nav: FC<NavProps> = ({ chapters }: NavProps) => {
       {chapters.map((chapter: types.Chapter) => (
         <div key={chapter.id}>
           <Link href={`/chapter/${chapter.id}`}>
-            <a>
+            <a id={`chapter-${chapter.id}`}>
               {chapter.id}. {chapter.title}
             </a>
           </Link>

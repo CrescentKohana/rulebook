@@ -3,7 +3,7 @@ import Router from "next/router"
 import { FC, useCallback, useState } from "react"
 import validator from "validator"
 import { postAPI } from "../lib/api"
-import styles from "../styles/popup.module.css"
+import styles from "../styles/Popup.module.css"
 
 const AddRulebook: FC = () => {
   const defaultHelper = "Enter a direct URL to a correctly formatted text file to replace the rulebook on the site."
@@ -18,8 +18,6 @@ const AddRulebook: FC = () => {
 
     if (!error) {
       const response = await postAPI("/chapters", { url })
-      console.log(response.code)
-
       if (response.code === 201) {
         Router.reload()
       } else {

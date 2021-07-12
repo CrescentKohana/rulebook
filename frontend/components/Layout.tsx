@@ -1,14 +1,9 @@
-import { Typography } from "@material-ui/core"
-import Link from "next/link"
-import React, { FC, useEffect, useState } from "react"
+import { IconButton, Typography } from "@material-ui/core"
+import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined"
+import React, { FC, useState } from "react"
 import styles from "../styles/Layout.module.css"
-import typography from "../styles/Typography.module.css"
 import * as types from "../types"
-import AddRulebook from "./AddRulebook"
-import Footer from "./Footer"
-import Nav from "./Nav"
-import PopupWrapper from "./PopupWrap"
-import Search from "./Search"
+import Menu from "./Menu"
 
 interface LayoutProps {
   pageTitle: string
@@ -17,48 +12,22 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ pageTitle, chapters, children }) => {
-  const [searchOpen, setSearchOpen] = useState(false)
-  const closeSearchPopup = () => setSearchOpen(false)
+  const [open, setOpen] = useState(false)
+  const closeMenu = () => setOpen(!open)
 
-  const [addOpen, setAddOpen] = useState(false)
-  const closeAddPopup = () => setAddOpen(false)
-
-  // Prevent main page scrolling when the search popup is open.
-  useEffect(() => {
-    ;(searchOpen || addOpen) && (document.body.style.overflow = "hidden")
-    !searchOpen && !addOpen && (document.body.style.overflow = "unset")
-  }, [searchOpen, addOpen])
+  const menuClasses = `${styles.menu} ${open && styles.menuHidden}`
 
   return (
     <>
       <div className={styles.main}>
+        <IconButton id={styles.menuButton} color="default" onClick={closeMenu} edge="start" aria-label="menu">
+          <MenuOutlinedIcon />
+        </IconButton>
         <div className={styles.row}>
-          <div className={styles.leftColumn}>
-            <div className={styles.leftColumnWrap}>
-              <div className={typography.header}>
-                <h1 className={typography.title}>
-                  <Link href="/">
-                    <a>Rulebook</a>
-                  </Link>
-                </h1>
-              </div>
-              <Nav chapters={chapters} />
-              <PopupWrapper btnTitle="Search" openState={[searchOpen, setSearchOpen]} closePopup={closeSearchPopup}>
-                <Search chapters={chapters} closePopup={closeSearchPopup} />
-              </PopupWrapper>
-              <br />
-              <br />
-              <PopupWrapper btnTitle="Replace" openState={[addOpen, setAddOpen]} closePopup={closeAddPopup}>
-                <AddRulebook>
-                  <p>a</p>
-                </AddRulebook>
-              </PopupWrapper>
-              <br />
-              <br />
-              <Footer />
-            </div>
+          <div className={menuClasses}>
+            <Menu chapters={chapters} />
           </div>
-          <div className={styles.rightColumn}>
+          <div className={styles.content}>
             <Typography variant="h3" align="center">
               {pageTitle}
             </Typography>

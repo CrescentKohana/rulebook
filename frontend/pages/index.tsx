@@ -16,16 +16,15 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
 
       <Layout pageTitle="Rulebook" chapters={chapters}>
         <Typography variant="body1" paragraph={true} align="left">
-          This frontend is powered by Next.js + TypeScript. The backend parsing and serving the ruleset is written by
-          Go. By Marko Leinikka (2021).
-        </Typography>
-        <Typography variant="body1" paragraph={true} align="left">
-          Rule source:{" "}
+          On this site one can find well-formatted rules for Magic the Gathering. Source for the rules{" "}
           <Link href="https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt">
-            <a>https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt</a>
+            <a>here</a>
           </Link>
           . This URL works with the <b>Replace</b> on the left.
         </Typography>
+        <Typography variant="body1" paragraph={true} align="left"></Typography>
+        This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is
+        written by Go. By Marko Leinikka (2021).
       </Layout>
     </div>
   )

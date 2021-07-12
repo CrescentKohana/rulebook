@@ -5,8 +5,9 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="icon" href="/favicon.ico" />
+          <meta name="charset" content="utf-8" />
           <meta name="description" content="Rulebook (Next.js / TypeScript)" />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />

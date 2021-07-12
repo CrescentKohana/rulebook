@@ -5,7 +5,7 @@ import { FC, SyntheticEvent, useCallback, useState } from "react"
 import Highlighter from "react-highlight-words"
 import { sanitize } from "../lib/sanitizers"
 import { search, SearchResults } from "../lib/search"
-import styles from "../styles/popup.module.css"
+import styles from "../styles/Popup.module.css"
 import * as types from "../types"
 
 interface SearchProps {
@@ -73,9 +73,9 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
 
       {results.total > 0 && (
         <>
-          <ul className={styles.results}>
+          <ul id="search-results" className={styles.results}>
             {results.data.map(({ chapterId, comboId, snippet }) => (
-              <li key={`${chapterId}#${comboId}`} className={styles.result}>
+              <li id={`${chapterId}#${comboId}`} key={`${chapterId}#${comboId}`} className={styles.result}>
                 <Link href={`/chapter/${chapterId}#${comboId}`}>
                   <a onClick={closePopup}>
                     <Card>

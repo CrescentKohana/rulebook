@@ -7,13 +7,9 @@
 }
 
 #footer {
-  color:rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
   width: 100%;
   border-top: 2px solid rgb(47, 50, 53);
-}
-
-.main {
-  margin: 5%;
 }
 
 .row {
@@ -22,25 +18,78 @@
   flex-wrap: wrap;
 }
 
-.leftColumnWrap {
+/* Small screens and mobile */
+@media screen and (max-width: 499px) {
+  .main {
+    margin: 0;
+  }
+
+  #menuButton {
+    display: block;
+    position: fixed;
+    margin: 0;
+    z-index: 22;
+  }
+
+  .content {
+    width: 100%;
+    margin: 0 0 0 50px;
+  }
+
+  .menu {
+    margin-top: 50px;
+    min-width: 0;
+    max-width: 0;
+    display: flex;
+  }
+
+  .menuHidden {
+    display: none;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 500px) {
+  .main {
+    margin: 5% 5% 0 0;
+  }
+
+  #menuButton {
+    display: none;
+  }
+
+  .content {
+    width: 75%;
+    margin: 0;
+  }
+
+  .menu {
+    min-width: 200px;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
+
+  .menuHidden {
+    display: unset;
+  }
+}
+
+.menuWrap {
+  background-color: rgb(35, 39, 42);
   position: fixed;
   padding: 25px;
   max-width: 200px;
 }
 
-.leftColumn {
+.menu {
   text-align: center;
   background-color: rgb(35, 39, 42);
-  color:#fff;
-  display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
-  min-width: 200px;
-  max-width: 200px;
 }
 
-.rightColumn {
+.content {
   padding: 10px;
   background-color: rgb(247, 246, 235);
   color: #292826;
@@ -48,6 +97,5 @@
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
-  width: 75%;
   min-height: 100vh;
 }
