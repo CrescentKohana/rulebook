@@ -27,6 +27,5 @@ export function keepLinks(dirtyContent: string): string {
  * @returns sanitized content
  */
 export function sanitize(dirtyContent: string): string {
-  const cleanContent = sanitizeHtml(dirtyContent, { allowedTags: [] })
-  return cleanContent
+  return sanitizeHtml(dirtyContent, {allowedTags: []})
 }

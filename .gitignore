@@ -1,4 +1,6 @@
-data/*
+# editors, IDE
+.vscode
+.idea
 backend/rest/
 
 # build executables
@@ -8,3 +10,5 @@ backend/backend.exe
 # secrets during testing
 .env.secrets
 docker-compose.secret.yml
+
+data/*

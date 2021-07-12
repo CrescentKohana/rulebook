@@ -5,23 +5,28 @@ import { FC, SyntheticEvent, useCallback, useState } from "react"
 import Highlighter from "react-highlight-words"
 import { sanitize } from "../lib/sanitizers"
 import { search, SearchResults } from "../lib/search"
-import styles from "../styles/search.module.css"
+import styles from "../styles/popup.module.css"
 import * as types from "../types"
 
 interface SearchProps {
-  chapters: types.Chapter[]
-  closePopup:
-    | ((event?: SyntheticEvent<Element, Event> | KeyboardEvent | TouchEvent | MouseEvent | undefined) => void)
-    | undefined
+  chapters?: types.Chapter[]
+  closePopup: (event: SyntheticEvent) => void
 }
 
+/**
+ * Search bar and results.
+ *
+ * @param chapters
+ * @param closePopup  when a search result is clicked, this closes the whole popup
+ * @returns JSON response as Rulebook
+ */
 const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const defaultResults: SearchResults = { data: [], shown: 0, total: 0 }
   const [results, setResults] = useState(defaultResults)
   const [query, setQuery] = useState("")
   const [error, setError] = useState(false)
-  const [helperText, sethelperText] = useState("Format for finding an exact rule: 100.1a")
+  const [helperText, setHelperText] = useState("Format for finding an exact rule: 100.1a")
 
   const onChange = useCallback(
     (event) => {
@@ -30,21 +35,22 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
 
       if (currentQuery.length < 3) {
         setError(true)
-        sethelperText("At least 3 characters.")
+        setHelperText("At least 3 characters.")
         setResults(defaultResults)
         return
       }
 
       setError(false)
-      sethelperText("")
+      setHelperText("")
 
-      const results = search(chapters, currentQuery)
+      const chaptersHelper = chapters == null ? [] : chapters
+      const results = search(chaptersHelper, currentQuery)
 
       if (results != null && results.total > 0) {
         setResults(results)
-        sethelperText(`Showing ${results.shown} out of ${results.total} results.`)
+        setHelperText(`Showing ${results.shown} out of ${results.total} results.`)
       } else {
-        sethelperText("No results")
+        setHelperText("No results")
         setResults(defaultResults)
       }
     },
@@ -54,11 +60,11 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
   return (
     <div className={styles.container}>
       <TextField
-        id="filled-basic"
+        id="search-box"
         label="Search for rules"
         variant="filled"
         fullWidth={true}
-        className={styles.searchField}
+        className={styles.textField}
         error={error}
         helperText={helperText}
         onChange={onChange}

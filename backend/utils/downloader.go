@@ -27,7 +27,6 @@ func DownloadFile(url string, filename string) (string, error) {
 	r := http.MaxBytesReader(nil, response.Body, byteLimit)
 	defer r.Close()
 
-
 	buffer, err := ioutil.ReadAll(r)
 	if err != nil {
 		output.Close()

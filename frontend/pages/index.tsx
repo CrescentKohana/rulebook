@@ -20,10 +20,11 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
           Go. By Marko Leinikka (2021).
         </Typography>
         <Typography variant="body1" paragraph={true} align="left">
-          Source for the rules (MagicCompRules 20210419.txt):{" "}
+          Rule source:{" "}
           <Link href="https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt">
-            <a>wizards.com</a>
+            <a>https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt</a>
           </Link>
+          . This URL works with the <b>Replace</b> on the left.
         </Typography>
       </Layout>
     </div>

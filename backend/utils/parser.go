@@ -140,16 +140,15 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 		}
 	}
 
-	if len(rulebook.Chapters) > 0 {
-		// Rename temporary file
-		err := os.Rename(filePath, DataPath + "rulebook_runtime_download.txt")
-		if err != nil {
-			log.Println(err)
-		}
-	}
-
 	if filePath == (DataPath + "temp.txt") {
 		file.Close()
+		if len(rulebook.Chapters) > 0 {
+			// Rename temporary file
+			err := os.Rename(filePath, DataPath + "rulebook_runtime_download.txt")
+			if err != nil {
+				log.Println(err)
+			}
+		}
 		os.Remove(filePath)
 	}
 

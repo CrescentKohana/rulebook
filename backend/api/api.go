@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -14,13 +15,13 @@ import (
 	"github.com/Luukuton/rulebook/backend/utils"
 )
 
-type HTTPError struct {
+type httpError struct {
 	Code    int
 	Message string
 }
 
-type FormData struct {
-	URL string
+type formData struct {
+	URL string `json:"url"`
 }
 
 var rulebook types.Rulebook
@@ -74,9 +75,29 @@ func returnRulebook(w http.ResponseWriter, r *http.Request) {
 }
 
 func newRulebook(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
-	var formData FormData
-	err := decoder.Decode(&formData)
+	origin := r.Header.Get("Origin")
+
+	var originLocalhost = regexp.MustCompile(`^https?:\/\/(?:localhost|frontend):\d+$`)
+	var originFrontend = regexp.MustCompile(`^https?:\/\/(?:localhost|frontend):\d+$`)
+
+	if originLocalhost.MatchString(origin) || originFrontend.MatchString(origin) {
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+		w.Header().Set("Vary", "Origin")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+	} else if r.Method == "OPTIONS" {
+		errorHandler(w, r, http.StatusForbidden, "")
+		return
+	}
+
+	var formData formData
+	err := json.NewDecoder(r.Body).Decode(&formData)
+
 	if err != nil || formData.URL == "" {
 		errorHandler(w, r, http.StatusBadRequest, "missing url body parameter")
 		return
@@ -140,13 +161,13 @@ func handleRequests() {
 	// Routers
 	r.HandleFunc("/", root).Methods("GET")
 	r.HandleFunc(baseURL+"/chapters", returnRulebook).Methods("GET")
-	r.HandleFunc(baseURL+"/chapters", newRulebook).Methods("POST")
+	r.HandleFunc(baseURL+"/chapters", newRulebook).Methods("POST", "OPTIONS")
 	r.HandleFunc(baseURL+"/chapters/{id:[1-9][0-9]*}", returnChapter).Methods("GET")
 	r.HandleFunc(baseURL+"/chapters/{id:[1-9][0-9]*}/{subid:[1-9][0-9]{2}}", returnSubchapter).Methods("GET")
 
 	// Error handling
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(HTTPError{Code: http.StatusNotFound, Message: http.StatusText(http.StatusNotFound)})
+		json.NewEncoder(w).Encode(httpError{Code: http.StatusNotFound, Message: http.StatusText(http.StatusNotFound)})
 	})
 
 	log.Error(http.ListenAndServe(":5050", r))
