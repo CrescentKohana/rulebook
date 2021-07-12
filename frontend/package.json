@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -p 8080",
     "docker": "next build && next start -p 8080",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.1",
@@ -28,6 +29,7 @@
     "@types/sanitize-html": "^2.3.2",
     "@types/validator": "^13.6.3",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "cypress": "^7.7.0",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^8.3.0",

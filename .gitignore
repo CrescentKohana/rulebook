@@ -11,4 +11,6 @@ backend/backend.exe
 .env.secrets
 docker-compose.secret.yml
 
-data/*
+# ruledata except for the made up test data
+data/*.txt
+!data/rulebook_test_data.txt

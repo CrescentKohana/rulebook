@@ -1,0 +1,123 @@
+{
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Game Concepts",
+      "subchapters": [
+        {
+          "id": 100,
+          "title": "Offence",
+          "rules": [
+            {
+              "id": 1,
+              "content": "Always try to attack.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "Except when defending. See rule 101.1."
+                },
+                {
+                  "id": "b",
+                  "content": "Except when you have lost."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "content": "Each and every attack has to be at full power.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "Full power as in 100% of your power, no less."
+                },
+                {
+                  "id": "b",
+                  "content": "Power can be more than 100%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 101,
+          "title": "Defence",
+          "rules": [
+            {
+              "id": 1,
+              "content": "Always defend if you're being attacked.",
+              "subrules": []
+            },
+            {
+              "id": 2,
+              "content": "Defending does not have to be at full power.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "It has to be more than 0%."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Types",
+      "subchapters": [
+        {
+          "id": 200,
+          "title": "Fairies",
+          "rules": [
+            {
+              "id": 1,
+              "content": "Fairies are good at offence.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "They should be used for offence, but it's not forced. See rule 100."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "content": "One cannot command more than 500 fairies at the same time.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "Nor less than 0.\nExample: 232 fairies."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 201,
+          "title": "Dragons",
+          "rules": [
+            {
+              "id": 1,
+              "content": "Dragons are good at defence.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "They should be used for defence, but it's not forced. See rule 101."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "content": "One cannot command more than 100 dragons at the same time.",
+              "subrules": [
+                {
+                  "id": "a",
+                  "content": "Nor less than 0."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
