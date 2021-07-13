@@ -61,7 +61,7 @@ Example: 232 fairies.
 
 201.1. Dragons are good at defence.
 
-201.1a They should be used for defence, but it's not forced. See rule 101.
+201.1a They should be used for defence, but it's not forced. See rule 101.2a.
 
 201.2. One cannot command more than 100 dragons at the same time.
 

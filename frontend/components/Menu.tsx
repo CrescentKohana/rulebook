@@ -3,10 +3,10 @@ import React, { FC, useEffect, useState } from "react"
 import styles from "../styles/Layout.module.css"
 import typography from "../styles/Typography.module.css"
 import * as types from "../types"
-import AddRulebook from "./AddRulebook"
 import Footer from "./Footer"
 import Nav from "./Nav"
 import PopupWrapper from "./PopupWrap"
+import ReplaceRulebook from "./ReplaceRulebook"
 import Search from "./Search"
 
 interface MenuProps {
@@ -42,9 +42,9 @@ const Menu: FC<MenuProps> = ({ chapters }) => {
       <br />
       <br />
       <PopupWrapper btnTitle="Replace" openState={[addOpen, setAddOpen]} closePopup={closeAddPopup}>
-        <AddRulebook>
+        <ReplaceRulebook>
           <p>a</p>
-        </AddRulebook>
+        </ReplaceRulebook>
       </PopupWrapper>
       <br />
       <br />

@@ -32,7 +32,7 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 
 - Start backend with test data: `.\backend file ../data/rulebook_test_data.txt ../data/` in the backend dir.
 
-- Run `npm run cypress:open` in the frontend dir.
+- Run `npm run cypress:open` (GUI) or `npm run test:e2e` (CLI) in the frontend dir.
 
 ### Unit
 

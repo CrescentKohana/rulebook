@@ -9,7 +9,8 @@
     "docker": "next build && next start -p 8080",
     "lint": "next lint",
     "prettier": "prettier",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.1",

@@ -5,7 +5,7 @@ import validator from "validator"
 import { postAPI } from "../lib/api"
 import styles from "../styles/Popup.module.css"
 
-const AddRulebook: FC = () => {
+const ReplaceRulebook: FC = () => {
   const defaultHelper = "Enter a direct URL to a correctly formatted text file to replace the rulebook on the site."
   const [url, setURL] = useState("")
   const [error, setError] = useState(false)
@@ -36,10 +36,10 @@ const AddRulebook: FC = () => {
       setHelperText(defaultHelper)
     } else if (validator.isURL(currentUrl)) {
       setError(false)
-      setHelperText("✔️ Valid URL")
+      setHelperText("✔️ Valid URL.")
     } else {
       setError(true)
-      setHelperText("Not a valid URL")
+      setHelperText("Not a valid URL.")
     }
   }, [])
 
@@ -47,7 +47,7 @@ const AddRulebook: FC = () => {
     <div className={styles.container}>
       <form onSubmit={addURL}>
         <TextField
-          id="url"
+          id="url-input"
           label="URL"
           variant="filled"
           required
@@ -57,7 +57,7 @@ const AddRulebook: FC = () => {
           helperText={helperText}
           onChange={onChange}
         />
-        <Button variant="contained" color="default" type="submit">
+        <Button id="submit-url-btn" variant="contained" color="default" type="submit">
           Replace
         </Button>
       </form>
@@ -65,4 +65,4 @@ const AddRulebook: FC = () => {
   )
 }
 
-export default AddRulebook
+export default ReplaceRulebook

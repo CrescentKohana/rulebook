@@ -1,7 +1,7 @@
 import sanitizeHtml from "sanitize-html"
 
 /**
- * Sanitizes HTML/text. Only a tags allowed with href attributes. Also no external URLs or protocols.
+ * Sanitizes HTML/text. Only a tags allowed with href and id attributes. Also no external URLs or protocols.
  *
  * @param text
  * @returns sanitized content
@@ -9,8 +9,8 @@ import sanitizeHtml from "sanitize-html"
 export function keepLinks(dirtyContent: string): string {
   const cleanContent = sanitizeHtml(dirtyContent, {
     allowedTags: ["a"],
-    allowedClasses: {
-      a: ["href"],
+    allowedAttributes: {
+      a: ["href", "id"],
     },
     allowedSchemes: [],
     allowProtocolRelative: false,

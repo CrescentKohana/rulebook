@@ -12,8 +12,8 @@ import * as types from "../types"
 function addLinks(rule: string): string {
   const ruleIdRegexAndVer = /(?<=.*[rR]ules? \d\d{2}(?:\.\d{1,3})?[a-z]? and )((\d)\d{2}(?:\.\d{1,3})?[a-z]?)(?=.*)/g
   const ruleIdRegex = /(?<=.*[rR]ules? )((\d)\d{2}(\.\d{1,3})?[a-z]?)(?=.*)/g
-  let ruleWithLinks: string = rule.replace(ruleIdRegexAndVer, '<a href="/chapter/$2#$1">$1</a>')
-  ruleWithLinks = ruleWithLinks.replace(ruleIdRegex, '<a href="/chapter/$2#$1">$1</a>')
+  let ruleWithLinks: string = rule.replace(ruleIdRegexAndVer, '<a id="ref-$1" href="/chapter/$2#$1">$1</a>')
+  ruleWithLinks = ruleWithLinks.replace(ruleIdRegex, '<a id="ref-$1" href="/chapter/$2#$1">$1</a>')
   return ruleWithLinks
 }
 

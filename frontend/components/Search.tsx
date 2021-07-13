@@ -50,7 +50,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
         setResults(results)
         setHelperText(`Showing ${results.shown} out of ${results.total} results.`)
       } else {
-        setHelperText("No results")
+        setHelperText("No results.")
         setResults(defaultResults)
       }
     },

@@ -1,0 +1,36 @@
+.container {
+  width: 50vw;
+  margin: 100px 0 0 0;
+}
+
+.results {
+  list-style: none;
+  padding: 0;
+  max-height: calc(50vh);
+  overflow-y: auto;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+/* WebKit */
+.results::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.result {
+  margin-bottom: 10px;
+}
+
+.result a {
+  text-decoration: none;
+}
+
+.textField {
+  background-color: rgb(23, 26, 29);
+  border-radius: 2px;
+}
+
+.linkIcon {
+  float: right;
+}
