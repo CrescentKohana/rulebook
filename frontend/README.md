@@ -12,6 +12,14 @@ The backend has to be up and running before trying to build the site!
 - `npm run dev` for development.
 - `npm run build` and `npm start` for production.
 
+## Testing
+
+**Information about End to End testing can be found in the main [README](../README.md)**
+
+## Style
+
+- `npm run prettier -- --write .` and `npm run lint` for style checks.
+
 ### Dependencies
 
 - nodejs v14.17.1+ (LTS)

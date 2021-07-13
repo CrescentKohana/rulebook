@@ -22,8 +22,6 @@ services:
     hostname: frontend
     build: 
       context: ./frontend
-      args:
-        - RULEBOOK_API_URL=http://backend:5050/api/v1
     ports:
       - '8080:8080' # container:host
     restart: on-failure

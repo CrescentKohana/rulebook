@@ -8,6 +8,7 @@
     "start": "next start -p 8080",
     "docker": "next build && next start -p 8080",
     "lint": "next lint",
+    "prettier": "prettier",
     "cypress:open": "cypress open"
   },
   "dependencies": {

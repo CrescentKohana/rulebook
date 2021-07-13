@@ -14,43 +14,33 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 
 ## Local setup
 
-- Get the latest Docker.
+- Get latest Docker.
 
-- Run `docker compose up --build` in the root directory of the repository.
+- Change backend's environmentals or volume location in the [docker-compose.yml](docker-compose.yml) if needed.
 
-## Azure / GitHub Actions setup
+- Run `docker-compose up --build` in the root dir of the repository.
 
-Read the short section [Configure GitHub workflow](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-github-action#configure-github-workflow) by Microsoft how to get some of the keys below.
+**About setting up Azure pipeline [here](AZURE.md).**
 
-Following environmental variables (_Actions secrets_ in repo settings) are required:
+## Testing
 
-- **AZURE_PUBLIC_URL**: basically the URL for the frontend. Remember http(s) and the port! 
-Example: `https://rulebook.northeurope.azurecontainer.io:443`.
-- **AZURE_REGION**: the region where the deployment is physically located Example: `northeurope`.
+### End to End
 
-- **REGISTRY_NAME**: name of the Azure registry (**this-one-here**.azurecr.io).
+- Setup backend (`go build .`) and frontend (`npm run build && npm start` OR `npm run dev`).
 
-- **REGISTRY_USERNAME**: The clientId from the JSON output from the service principal creation.
+- `chmod +x ./backend` probably needed on Linux for the backend. Also, on Windows the binary is called`./backend.exe`.
 
-- **REGISTRY_PASSWORD**: The clientSecret from the JSON output from the service principal creation.
+- Start backend with test data: `.\backend file ../data/rulebook_test_data.txt ../data/` in the backend dir.
 
-- **RESOURCE_GROUP**: The name of the resource group you used to scope the service principal.
+- Run `npm run cypress:open` in the frontend dir.
 
-- **SHARE_NAME**: The name of the file share in Azure.
-
-- **STORAGE_ACCOUNT_NAME**: The name of the file storage account in Azure.
-
-- **STORAGE_ACCOUNT_KEY**: The password of the file storage account in Azure.
-
-- **CI_AZURE_CREDENTIALS**: The entire JSON output from the service principal creation step.
-
-- **REPO_GHA_PAT**: Person Access Token with repo scope
+### Unit
 
 ## Requirements
 
 - Docker 3.4+
-- [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it) ([bundled](frontend/wait-for-it.sh))
+- [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it) (already [bundled](frontend/wait-for-it.sh))
 
-## Something to improve
+## Future improvements
 
-- ...
+- Authentication for the URL input
