@@ -64,7 +64,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
               chapterId: chapter.id,
               chapterTitle: chapter.title,
               comboId: `${subchapter.id}.${rule.id}${subrule.id}`,
-              snippet: rule.content,
+              snippet: subrule.content,
             })
           }
         })
