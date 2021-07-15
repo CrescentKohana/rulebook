@@ -1,3 +1,5 @@
+docker-compose.yml
+
 # editors, IDE
 .vscode
 .idea
@@ -7,7 +9,7 @@ backend/rest/
 backend/backend
 backend/backend.exe
 
-# secrets during testing
+# some secrets during testing
 .env.secrets
 docker-compose.secret.yml
 

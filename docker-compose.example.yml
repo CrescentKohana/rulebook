@@ -20,6 +20,11 @@ services:
     hostname: frontend
     build: 
       context: ./frontend
+      args:
+        # The public domain of the rulebook frontend (e.g. https://rulebook.example.com)
+        - RULEBOOK_DOMAIN=http://localhost:8080
+        # Backend's URL with port
+        - RULEBOOK_API_URL=http://backend:5050/api/v1
     ports:
       - '8080:8080' # container:host
     restart: on-failure

@@ -16,7 +16,9 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 
 - Get latest Docker.
 
-- Change backend's environmentals or volume location in the [docker-compose.yml](docker-compose.yml) if needed.
+- Create `docker-compose.yml` to the root of the repository by copying the [docker-compose.example.yml(docker-compose.example.yml).
+
+- Change backend's and frontend's (at least RULEBOOK_DOMAIN) environmentals or volume location in the [docker-compose.yml](docker-compose.yml) if needed.
 
 - Run `docker-compose up --build` in the root dir of the repository.
 
@@ -44,3 +46,4 @@ Following demo is automatically built and deployed to Microsoft Azure: [rulebook
 ## Future improvements
 
 - Authentication for the URL input
+- [Currently replace requires manual reload of the site, fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)
