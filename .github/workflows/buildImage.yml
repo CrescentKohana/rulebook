@@ -22,12 +22,23 @@ jobs:
         with:
           creds: ${{ secrets.CI_AZURE_CREDENTIALS }}
 
+# Fix for a bug in Azure CLI
       - name: Build image
-        run: |
-          az acr build --image "${REGISTRY_NAME}.azurecr.io/rulebook-backend" --registry "$REGISTRY_NAME" "$GITHUB_WORKSPACE/backend"
-          az acr build --image "${REGISTRY_NAME}.azurecr.io/rulebook-frontend" --registry "$REGISTRY_NAME" "$GITHUB_WORKSPACE/frontend"
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.26.1 
+          inlineScript: |
+            az acr build --image "${REGISTRY_NAME}.azurecr.io/rulebook-backend" --registry "$REGISTRY_NAME" "$GITHUB_WORKSPACE/backend"
+            az acr build --image "${REGISTRY_NAME}.azurecr.io/rulebook-frontend" --registry "$REGISTRY_NAME" "$GITHUB_WORKSPACE/frontend"
         env:
           REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
+
+#       - name: Build image
+#         run: |
+#           az acr build --image "${REGISTRY_NAME}.azurecr.io/rulebook-backend" --registry "$REGISTRY_NAME" "$GITHUB_WORKSPACE/backend"
+#           az acr build --image "${REGISTRY_NAME}.azurecr.io/rulebook-frontend" --registry "$REGISTRY_NAME" "$GITHUB_WORKSPACE/frontend"
+#         env:
+#           REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
 
       - name: Trigger deployment
         if: success()
