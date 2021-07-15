@@ -48,7 +48,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
 
       if (results != null && results.total > 0) {
         setResults(results)
-        setHelperText(`Showing ${results.shown} out of ${results.total} results.`)
+        setHelperText(`Showing ${results.shown}/${results.total} results, type more keywords to refine.`)
       } else {
         setHelperText("No results.")
         setResults(defaultResults)
@@ -74,7 +74,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
       {results.total > 0 && (
         <>
           <ul id="search-results" className={styles.results}>
-            {results.data.map(({ chapterId, comboId, snippet }) => (
+            {results.data.map(({ chapterId, chapterTitle, comboId, snippet }) => (
               <li id={`${chapterId}#${comboId}`} key={`${chapterId}#${comboId}`} className={styles.result}>
                 <Link href={`/chapter/${chapterId}#${comboId}`}>
                   <a onClick={closePopup}>
@@ -83,7 +83,7 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
                         <Typography variant="h6">
                           {comboId + " "}
                           <Typography color="textSecondary" display="inline">
-                            Chapter {chapterId}
+                            Chapter {chapterId}: {chapterTitle}
                           </Typography>
                           <LinkIcon color="primary" className={styles.linkIcon} />
                         </Typography>

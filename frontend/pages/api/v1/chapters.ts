@@ -11,9 +11,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       body: JSON.stringify(req.body),
     })
 
+    // Possible fix for the rule data not refreshing on the first reload.
+    // res.setPreviewData({}, { maxAge: 1 })
     res.status(response.status).json(await response.json())
   } else if (req.url && req.method === "GET") {
-    console.log(getAPIURL(req.url, true))
     const response = await fetch(getAPIURL(req.url, true))
     res.status(response.status).json(await response.json())
   }

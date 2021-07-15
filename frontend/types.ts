@@ -33,6 +33,7 @@ export interface Subrule {
 
 export interface SearchResult {
   chapterId: number
+  chapterTitle: string
   comboId: string
   snippet: string
 }

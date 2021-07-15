@@ -6,6 +6,10 @@
   margin: 10px 0 10px 0;
 }
 
+#subNav {
+  text-align: center;
+}
+
 #footer {
   color: rgb(255, 255, 255);
   width: 100%;
@@ -85,7 +89,6 @@
 }
 
 .menu {
-  text-align: center;
   background-color: rgb(35, 39, 42);
 }
 

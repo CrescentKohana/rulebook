@@ -36,19 +36,19 @@ const Menu: FC<MenuProps> = ({ chapters }) => {
         </h1>
       </div>
       <Nav chapters={chapters} />
-      <PopupWrapper btnTitle="Search" openState={[searchOpen, setSearchOpen]} closePopup={closeSearchPopup}>
-        <Search chapters={chapters} closePopup={closeSearchPopup} />
-      </PopupWrapper>
-      <br />
-      <br />
-      <PopupWrapper btnTitle="Replace" openState={[addOpen, setAddOpen]} closePopup={closeAddPopup}>
-        <ReplaceRulebook>
-          <p>a</p>
-        </ReplaceRulebook>
-      </PopupWrapper>
-      <br />
-      <br />
-      <Footer />
+      <div id={styles.subNav}>
+        <PopupWrapper btnTitle="Search" openState={[searchOpen, setSearchOpen]} closePopup={closeSearchPopup}>
+          <Search chapters={chapters} closePopup={closeSearchPopup} />
+        </PopupWrapper>
+        <br />
+        <br />
+        <PopupWrapper btnTitle="Replace" openState={[addOpen, setAddOpen]} closePopup={closeAddPopup}>
+          <ReplaceRulebook />
+        </PopupWrapper>
+        <br />
+        <br />
+        <Footer />
+      </div>
     </div>
   )
 }

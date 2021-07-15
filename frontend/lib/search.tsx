@@ -32,6 +32,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
     if (compare(chapter.title, searchTerm)) {
       results.push({
         chapterId: chapter.id,
+        chapterTitle: chapter.title,
         comboId: "",
         snippet: chapter.title,
       })
@@ -41,6 +42,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
       if (compare(subchapter.title, searchTerm)) {
         results.push({
           chapterId: chapter.id,
+          chapterTitle: chapter.title,
           comboId: `${subchapter.id}`,
           snippet: subchapter.title,
         })
@@ -50,6 +52,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
         if (compare(rule.content, searchTerm)) {
           results.push({
             chapterId: chapter.id,
+            chapterTitle: chapter.title,
             comboId: `${subchapter.id}.${rule.id}`,
             snippet: rule.content,
           })
@@ -59,6 +62,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
           if (compare(subrule.content, searchTerm)) {
             results.push({
               chapterId: chapter.id,
+              chapterTitle: chapter.title,
               comboId: `${subchapter.id}.${rule.id}${subrule.id}`,
               snippet: rule.content,
             })
@@ -69,7 +73,7 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
   })
 
   const total: number = results.length
-  const shown = total < 20 ? total : 20
+  const shown = total < 50 ? total : 50
 
   return { data: results.slice(0, shown), total, shown }
 }
@@ -133,7 +137,12 @@ function findExactId(searchTerm: string, chapters: types.Chapter[]): types.Searc
         }
       }
 
-      return { chapterId: chapterId, comboId: searchTerm, snippet: directResult }
+      return {
+        chapterId: chapterId,
+        chapterTitle: chapters[chapterId - 1].title,
+        comboId: searchTerm,
+        snippet: directResult,
+      }
     }
   }
 
