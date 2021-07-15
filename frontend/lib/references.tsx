@@ -10,8 +10,9 @@ import * as types from "../types"
  * @returns rule with references to other rules tagged as html a-tag links
  */
 function addLinks(rule: string): string {
-  const ruleIdRegexAndVer = /(?<=.*[rR]ules? \d\d{2}(?:\.\d{1,3})?[a-z]? and )((\d)\d{2}(?:\.\d{1,3})?[a-z]?)(?=.*)/g
-  const ruleIdRegex = /(?<=.*[rR]ules? )((\d)\d{2}(\.\d{1,3})?[a-z]?)(?=.*)/g
+  const ruleIdRegexAndVer =
+    /(?<=.*(?:[rR]ules?|in) \d\d{2}(?:\.\d{1,3})?[a-z]? and )((\d)\d{2}(?:\.\d{1,3})?[a-z]?)(?=.*)/g
+  const ruleIdRegex = /(?<=.*(?:[rR]ules?|in) )((\d)\d{2}(\.\d{1,3})?[a-z]?)(?=.*)/g
   let ruleWithLinks: string = rule.replace(ruleIdRegexAndVer, '<a id="ref-$1" href="/chapter/$2#$1">$1</a>')
   ruleWithLinks = ruleWithLinks.replace(ruleIdRegex, '<a id="ref-$1" href="/chapter/$2#$1">$1</a>')
   return ruleWithLinks
