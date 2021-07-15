@@ -20,6 +20,18 @@ const Menu: FC<MenuProps> = ({ chapters }) => {
   const [addOpen, setAddOpen] = useState(false)
   const closeAddPopup = () => setAddOpen(false)
 
+  // Pressing q to opens search popup
+  useEffect(() => {
+    const handleOnKeyDown = (event: { keyCode: number }) => {
+      // 81 is 'q'
+      if (event.keyCode === 81) {
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener("keydown", handleOnKeyDown)
+    return () => window.removeEventListener("keydown", handleOnKeyDown)
+  }, [])
+
   // Prevent main page scrolling when the search popup is open.
   useEffect(() => {
     ;(searchOpen || addOpen) && (document.body.style.overflow = "hidden")
