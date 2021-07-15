@@ -2,7 +2,7 @@ import { Button, TextField } from "@material-ui/core"
 import Router from "next/router"
 import { FC, useCallback, useState } from "react"
 import validator from "validator"
-import { postAPI } from "../lib/api"
+import { postNextAPI } from "../lib/api"
 import styles from "../styles/Popup.module.css"
 
 const ReplaceRulebook: FC = () => {
@@ -17,7 +17,7 @@ const ReplaceRulebook: FC = () => {
     setURL(element.value)
 
     if (!error) {
-      const response = await postAPI("/chapters", { url })
+      const response = await postNextAPI("/api/v1/chapters", { url })
       if (response.code === 201) {
         Router.reload()
       } else {

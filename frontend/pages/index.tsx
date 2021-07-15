@@ -24,7 +24,7 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
         </Typography>
         <Typography variant="body1" paragraph={true} align="left"></Typography>
         This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is
-        written by Go. By Marko Leinikka (2021).
+        written in Go. By Marko Leinikka (2021).
       </Layout>
     </div>
   )

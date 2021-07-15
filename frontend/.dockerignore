@@ -3,3 +3,4 @@
 Dockerfile
 .next/
 node_modules/
+cypress/

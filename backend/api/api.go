@@ -77,10 +77,10 @@ func returnRulebook(w http.ResponseWriter, r *http.Request) {
 func newRulebook(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
 
-	var originLocalhost = regexp.MustCompile(`^https?:\/\/(?:localhost|frontend):\d+$`)
-	var originFrontend = regexp.MustCompile(`^https?:\/\/(?:localhost|frontend):\d+$`)
+	var originLocalhost = regexp.MustCompile(`^https?:\/\/(?:localhost):\d+$`)
+	var originFrontend = regexp.MustCompile(`^https?:\/\/(?:frontend):\d+$`)
 
-	if originLocalhost.MatchString(origin) || originFrontend.MatchString(origin) {
+	if originFrontend.MatchString(origin) || originLocalhost.MatchString(origin) {
 		w.Header().Set("Access-Control-Allow-Origin", origin)
 		w.Header().Set("Vary", "Origin")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")

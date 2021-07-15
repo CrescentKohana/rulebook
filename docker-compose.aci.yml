@@ -1,19 +1,17 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
     image: ${REGISTRY_NAME}.azurecr.io/rulebook-backend:latest
     container_name: rulebook-backend
     hostname: backend
-    build: 
+    build:
       context: ./backend
     environment:
-      # 'url' or 'file' 
+      # 'url' or 'file'
       - RULES_TYPE=url
       # URL or the path to the file. Example for a file: /usr/data/rulebook.txt
       - RULES_PATH=https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt
-    ports:
-      - '5050:5050' # container:host
     volumes:
       - ${SHARE_NAME}:/usr/data
     restart: on-failure
@@ -22,15 +20,12 @@ services:
     image: ${REGISTRY_NAME}.azurecr.io/rulebook-frontend:latest
     container_name: rulebook-frontend
     hostname: frontend
-    build: 
+    build:
       context: ./frontend
-      args:
-        - RULEBOOK_API_URL=http://backend:5050/api/v1
     ports:
-      - '8080:8080' # container:host
+      - "8080:8080" # container:host
     restart: on-failure
 
-  
   caddy:
     image: caddy:2.4.3-alpine
     restart: unless-stopped
