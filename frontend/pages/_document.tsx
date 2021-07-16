@@ -1,5 +1,8 @@
 import Document, { Head, Html, Main, NextScript } from "next/document"
 
+/**
+ * Custom document for the Html lang tag and Head meta tags.
+ */
 class MyDocument extends Document {
   render(): JSX.Element {
     return (

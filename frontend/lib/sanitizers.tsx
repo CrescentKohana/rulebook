@@ -20,7 +20,7 @@ export function keepLinks(dirtyContent: string): string {
 }
 
 /**
- * Sanitizes HTML/text completely, no tags are preserved. Content between tags is pserved, with the exception of
+ * Sanitizes HTML/text completely, no tags are preserved. Content between tags is preserved, with the exception of
  * [ 'style', 'script', 'textarea', 'option', 'noscript' ] (library default).
  *
  * @param text

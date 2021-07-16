@@ -13,6 +13,9 @@ interface Params extends ParsedUrlQuery {
   id: string
 }
 
+/**
+ * Server side generated chapter.
+ */
 const Chapter = ({ chapters, chapter }: InferGetStaticPropsType<typeof getStaticProps>): ReactElement => {
   if (chapters === null || chapter === null) {
     return <Custom404 chapters={chapters} />

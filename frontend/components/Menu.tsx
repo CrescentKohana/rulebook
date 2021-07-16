@@ -13,6 +13,9 @@ interface MenuProps {
   chapters: types.Chapter[]
 }
 
+/**
+ * Left side menu.
+ */
 const Menu: FC<MenuProps> = ({ chapters }) => {
   const [searchOpen, setSearchOpen] = useState(false)
   const closeSearchPopup = () => setSearchOpen(false)

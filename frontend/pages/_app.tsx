@@ -6,6 +6,9 @@ const theme = createTheme({
   palette: { type: "dark" },
 })
 
+/**
+ * Main app.
+ */
 function RulebookApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>

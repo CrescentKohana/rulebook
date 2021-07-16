@@ -11,6 +11,9 @@ interface LayoutProps {
   children?: React.ReactNode
 }
 
+/**
+ * The main layout of the app.
+ */
 const Layout: FC<LayoutProps> = ({ pageTitle, chapters, children }) => {
   const [open, setOpen] = useState(false)
   const closeMenu = () => setOpen(!open)

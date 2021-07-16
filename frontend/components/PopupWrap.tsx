@@ -10,6 +10,9 @@ interface PopupProps {
   children: React.ReactNode
 }
 
+/**
+ * Wrapper for the Popup class with a Button which opens it.
+ */
 const PopupWrapper: FC<PopupProps> = ({ btnTitle, openState, closePopup, children }) => {
   return (
     <>

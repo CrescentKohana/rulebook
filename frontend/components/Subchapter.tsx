@@ -8,6 +8,9 @@ interface SubchapterProps {
   chapterId: number
 }
 
+/**
+ * A subchapter. Has rules and belongs to a chapter.
+ */
 const Subchapter: FC<SubchapterProps> = ({ data, chapterId }: SubchapterProps) => {
   return (
     <div id={`${data.id}`}>

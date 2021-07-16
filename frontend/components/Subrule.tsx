@@ -10,6 +10,9 @@ interface SubruleProps {
   ruleId: number
 }
 
+/**
+ * A subrule. Belongs to a rule.
+ */
 const Subrule: FC<SubruleProps> = ({ data, chapterId, subchapterId, ruleId }: SubruleProps) => {
   return (
     <div id={`${subchapterId}.${ruleId}${data.id}`}>

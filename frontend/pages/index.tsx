@@ -7,6 +7,9 @@ import Layout from "../components/Layout"
 import { fetchAPI } from "../lib/api"
 import * as types from "../types"
 
+/**
+ * Home page.
+ */
 const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): ReactElement => {
   return (
     <div>

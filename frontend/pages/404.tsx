@@ -5,6 +5,9 @@ import Layout from "../components/Layout"
 import { fetchAPI } from "../lib/api"
 import * as types from "../types"
 
+/**
+ * Custom 404 page.
+ */
 const Custom404 = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): ReactElement => {
   return (
     <Layout pageTitle="404 - Page not found" chapters={chapters}>

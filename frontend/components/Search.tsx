@@ -23,8 +23,7 @@ interface RowProps {
  * Search bar and results.
  *
  * @param chapters
- * @param closePopup  when a search result is clicked, this closes the whole popup
- * @returns JSON response as Rulebook
+ * @param closePopup  when a search result is clicked, the popup is closed.
  */
 const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps

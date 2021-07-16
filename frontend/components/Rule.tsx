@@ -11,6 +11,9 @@ interface RuleProps {
   subchapterId: number
 }
 
+/**
+ * A rule. Has subrules and belongs to a subchapter.
+ */
 const Rule: FC<RuleProps> = ({ data, chapterId, subchapterId }: RuleProps) => {
   return (
     <div id={`${subchapterId}.${data.id}`} className={styles.rule}>

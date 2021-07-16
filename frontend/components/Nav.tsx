@@ -7,6 +7,9 @@ interface NavProps {
   chapters: types.Chapter[]
 }
 
+/**
+ * Dynamically build navigation consisting of chapters.
+ */
 const Nav: FC<NavProps> = ({ chapters }: NavProps) => {
   return (
     <nav id={styles.nav}>

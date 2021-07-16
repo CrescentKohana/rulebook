@@ -5,6 +5,9 @@ import validator from "validator"
 import { postNextAPI } from "../lib/api"
 import styles from "../styles/Popup.module.css"
 
+/**
+ * Rulebook replacer content for a popup.
+ */
 const ReplaceRulebook: FC = () => {
   const defaultHelper = "Enter a direct URL to a correctly formatted text file to replace the rulebook on the site."
   const [url, setURL] = useState("")
