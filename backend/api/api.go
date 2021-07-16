@@ -25,7 +25,19 @@ type formData struct {
 }
 
 var rulebook types.Rulebook
-var chaptersOnly types.Rulebook
+var tinyChapters types.Rulebook
+
+
+// Fills tinyChapters without subchapter data.
+func fillTinyChapters(chapters []types.Chapter) {
+	var tmpChapters types.Rulebook
+	for _, chapter := range chapters {
+		newChapter := types.Chapter{ID: chapter.ID, Title: chapter.Title, Subchapters: nil}
+		tmpChapters.Chapters = append(tmpChapters.Chapters, newChapter)
+	}
+
+	tinyChapters = tmpChapters
+}
 
 // Returns one subchapter as JSON.
 func returnSubchapter(w http.ResponseWriter, r *http.Request) {
@@ -66,7 +78,7 @@ func returnChapter(w http.ResponseWriter, r *http.Request) {
 func returnRulebook(w http.ResponseWriter, r *http.Request) {
 	filter := r.URL.Query().Get("filter")
 	if filter == "true" {
-		json.NewEncoder(w).Encode(chaptersOnly)
+		json.NewEncoder(w).Encode(tinyChapters)
 	} else {
 		json.NewEncoder(w).Encode(rulebook)
 	}
@@ -121,8 +133,9 @@ func newRulebook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Replace data
+	// Replaces data
 	rulebook = newRulebook
+	fillTinyChapters(newRulebook.Chapters)
 
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintf(w, `{ "code": %d, "message": "new rulebook data added" }`, http.StatusCreated)
@@ -176,12 +189,7 @@ func handleRequests() {
 // Starts API server.
 func StartAPI(rulebookArg types.Rulebook) {
 	rulebook = rulebookArg
-
-	// Fill chaptersOnly without subchapter data.
-	for _, chapter := range rulebook.Chapters {
-		newChapter := types.Chapter{ID: chapter.ID, Title: chapter.Title, Subchapters: nil}
-		chaptersOnly.Chapters = append(chaptersOnly.Chapters, newChapter)
-	}
+	fillTinyChapters(rulebook.Chapters)
 
 	handleRequests()
 }
