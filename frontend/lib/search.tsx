@@ -3,7 +3,6 @@ import * as types from "../types"
 export interface SearchResults {
   data: types.SearchResult[]
   total: number
-  shown: number
 }
 
 /**
@@ -73,9 +72,8 @@ export function search(chapters: types.Chapter[], searchTerm: string): SearchRes
   })
 
   const total: number = results.length
-  const shown = total < 50 ? total : 50
 
-  return { data: results.slice(0, shown), total, shown }
+  return { data: results, total }
 }
 
 /**

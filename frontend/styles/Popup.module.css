@@ -4,22 +4,34 @@
 }
 
 .results {
+  margin-top: 5px;
   list-style: none;
   padding: 0;
-  max-height: calc(50vh);
+  min-height: 75vh;
   overflow-y: auto;
   /* Firefox */
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
 }
 
-/* WebKit */
 .results::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  width: 10px;
 }
 
-.result {
-  margin-bottom: 10px;
+.results::-webkit-scrollbar-track-piece {
+  background-color: #36393b;
+}
+
+.results::-webkit-scrollbar-thumb {
+  background-color: #181b1e;
+  outline: 2px solid #36393b;
+  outline-offset: -2px;
+}
+
+.resultContent {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .result a {
