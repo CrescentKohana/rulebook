@@ -8,13 +8,6 @@ RUN npm install npm@latest -g && npm install
 
 FROM node:14-alpine
 
-ARG RULEBOOK_DOMAIN
-ARG RULEBOOK_API_URL
-
-ENV RULEBOOK_DOMAIN=$RULEBOOK_DOMAIN
-ENV RULEBOOK_API_URL=$RULEBOOK_API_URL
-ENV NODE_ENV=production
-
 WORKDIR /usr/app
 
 COPY . .

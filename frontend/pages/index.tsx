@@ -19,11 +19,15 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
 
       <Layout pageTitle="Rulebook" chapters={chapters}>
         <Typography variant="body1" paragraph={true} align="left">
-          On this site one can find well-formatted rules for Magic the Gathering. Source for the rules{" "}
+          On this site one can find well-formatted rules for Magic the Gathering{" "}
           <Link href="https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt">
-            <a>here</a>
+            <a>(source)</a>
           </Link>
-          . This URL works with the <b>Replace</b> on the left.
+          . This URL and{" "}
+          <Link href="https://strapi.luukuton.fi/uploads/rulebook_test_data.txt">
+            <a>the mock data here</a>
+          </Link>
+          can be used with the <b>Replace</b> on the left.
         </Typography>
         <Typography variant="body1" paragraph={true} align="left">
           This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is

@@ -55,7 +55,7 @@ describe("Rulebook", function () {
       cy.contains("It has to be more than 0%.")
     })
 
-    it.only("2 rules and 1 chapter about dragons are found", function () {
+    it("2 rules and 1 chapter about dragons are found", function () {
       cy.get("#search-box").type("dragon")
       cy.get("#search-results").find(".MuiPaper-root").should("have.length", 3)
       cy.contains("Dragons are good at defence.")
