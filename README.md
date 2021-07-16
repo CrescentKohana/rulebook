@@ -4,13 +4,15 @@
 
 Following demo is automatically built and deployed to Microsoft Azure: [rulebook.northeurope.azurecontainer.io](https://rulebook.northeurope.azurecontainer.io/)
 
+Also running on my personal server: [rulebook.luukuton.fi](https://rulebook.luukuton.fi) as the free Azure credits will run out at some point.
+
 ## Documentation
 
 [README](backend) for **Backend**
 
 [README](frontend) for **Frontend**
 
-[docker-compose.yml](docker-compose.yml) for local setups and [docker-compose.aci.yml](docker-compose.aci.yml) for Azure.
+[docker-compose.example.yml](docker-compose.example.yml) for local setups and [docker-compose.aci.yml](docker-compose.aci.yml) for Azure.
 
 ## Local setup
 
