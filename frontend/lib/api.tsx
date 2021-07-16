@@ -21,7 +21,7 @@ export function getAPIURL(path = "", host = false): string {
  * @param query
  * @returns JSON response as Rulebook
  */
-export async function fetchAPI(path: string, query = ""): Promise<types.Rulebook> {
+export async function fetchAPI(path: string, query = ""): Promise<types.Rulebook | types.Chapter> {
   const requestUrl = getAPIURL(path) + query
   const response = await fetch(requestUrl)
   return await response.json()

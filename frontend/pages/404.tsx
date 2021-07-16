@@ -16,7 +16,7 @@ const Custom404 = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>)
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const rulebook = await fetchAPI("/chapters")
+  const rulebook = (await fetchAPI("/chapters")) as types.Rulebook
   const chapters: types.Chapter[] = rulebook.chapters
 
   return {

@@ -32,7 +32,7 @@ const Chapter = ({ chapters, chapter }: InferGetStaticPropsType<typeof getStatic
 
 export const getStaticPaths: GetStaticPaths = async () => {
   // Get all available chapters during build
-  const rulebook = await fetchAPI("/chapters", "?filter=true")
+  const rulebook = (await fetchAPI("/chapters", "?filter=true")) as types.Rulebook
   if (rulebook.chapters !== null && rulebook.chapters.length !== 0) {
     const paths = rulebook.chapters.map((chapter) => ({ params: { slug: `${chapter.id}` } }))
     return { paths, fallback: "blocking" }
@@ -46,9 +46,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const params = context.params as Params
 
-  const rulebook = await fetchAPI("/chapters")
-  const chapters: types.Chapter[] = addReferences(rulebook.chapters)
-  const chapter: types.Chapter = chapters[Number(params.slug) - 1] || null
+  const rulebook = (await fetchAPI("/chapters")) as types.Rulebook
+  const chapters: types.Chapter[] = rulebook.chapters
+
+  let chapter: types.Chapter = chapters[Number(params.slug) - 1] || null
+  if (chapter) {
+    chapter = addReferences(chapter)
+  }
 
   return {
     props: { chapters, chapter },

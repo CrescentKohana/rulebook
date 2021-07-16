@@ -22,16 +22,20 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
           </Link>
           . This URL works with the <b>Replace</b> on the left.
         </Typography>
-        <Typography variant="body1" paragraph={true} align="left"></Typography>
-        This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is
-        written in Go. By Marko Leinikka (2021).
+        <Typography variant="body1" paragraph={true} align="left">
+          This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is
+          written in Go. By Marko Leinikka (2021).
+        </Typography>
+        <Typography variant="body1" paragraph={true} align="left">
+          Hint: Pressing Q opens up the Search!
+        </Typography>
       </Layout>
     </div>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const rulebook = await fetchAPI("/chapters")
+  const rulebook = (await fetchAPI("/chapters")) as types.Rulebook
   const chapters: types.Chapter[] = rulebook.chapters
 
   return {

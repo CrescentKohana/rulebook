@@ -19,26 +19,22 @@ function addLinks(rule: string): string {
 }
 
 /**
- * Wraps addLinks function to a loop that goes through every rule and subrule.
+ * Wraps addLinks function to a loop that goes through every rule and subrule in a chapter.
  *
- * @param chapters
- * @returns chapterse with references to other rules tagged as html a-tag links
+ * @param a chapter
+ * @returns a chapter with references to other rules tagged as html a-tag links
  */
-export function addReferences(chapters: types.Chapter[]): types.Chapter[] {
-  chapters.forEach((chapter: types.Chapter, chIndex) => {
-    chapter.subchapters.forEach((subchapter: types.Subchapter, subChIndex) => {
-      subchapter.rules.forEach((rule: types.Rule, ruleIndex) => {
-        const ruleContent: string = chapters[chIndex].subchapters[subChIndex].rules[ruleIndex].content
-        chapters[chIndex].subchapters[subChIndex].rules[ruleIndex].content = addLinks(ruleContent)
-        rule.subrules.forEach((_, subruleIndex) => {
-          const subruleContent: string =
-            chapters[chIndex].subchapters[subChIndex].rules[ruleIndex].subrules[subruleIndex].content
-          chapters[chIndex].subchapters[subChIndex].rules[ruleIndex].subrules[subruleIndex].content =
-            addLinks(subruleContent)
-        })
+export function addReferences(chapter: types.Chapter): types.Chapter {
+  chapter.subchapters.forEach((subchapter: types.Subchapter, subChIndex) => {
+    subchapter.rules.forEach((rule: types.Rule, ruleIndex) => {
+      const ruleContent: string = chapter.subchapters[subChIndex].rules[ruleIndex].content
+      chapter.subchapters[subChIndex].rules[ruleIndex].content = addLinks(ruleContent)
+      rule.subrules.forEach((_, subruleIndex) => {
+        const subruleContent: string = chapter.subchapters[subChIndex].rules[ruleIndex].subrules[subruleIndex].content
+        chapter.subchapters[subChIndex].rules[ruleIndex].subrules[subruleIndex].content = addLinks(subruleContent)
       })
     })
   })
 
-  return chapters
+  return chapter
 }

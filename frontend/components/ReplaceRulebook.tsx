@@ -19,6 +19,10 @@ const ReplaceRulebook: FC = () => {
     if (!error) {
       const response = await postNextAPI("/api/v1/chapters", { url })
       if (response.code === 201) {
+        // Even with this the user has to reload the site manually after. I wasn't able to debug the cause in
+        // reasonable time. When 'on-demand revalidation' is going be available for Next.js, this will be fixed:
+        // https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655
+        // https://stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand
         Router.reload()
       } else {
         setError(true)
