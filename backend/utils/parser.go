@@ -14,6 +14,7 @@ import (
 )
 
 // Parses given text file to structs defined in types/rulebook.go.
+// Input file is expected to be formatted correctly.
 func ParseTextToRulebook(filePath string) *types.Rulebook {
 	file, err := os.Open(filePath)
 

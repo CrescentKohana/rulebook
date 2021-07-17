@@ -7,7 +7,6 @@ import Subchapter from "../../components/Subchapter"
 import { fetchAPI } from "../../lib/api"
 import { addReferences } from "../../lib/references"
 import * as types from "../../types"
-import Custom404 from "../404"
 
 interface Params extends ParsedUrlQuery {
   id: string
@@ -17,10 +16,6 @@ interface Params extends ParsedUrlQuery {
  * Server side generated chapter.
  */
 const Chapter = ({ chapters, chapter }: InferGetStaticPropsType<typeof getStaticProps>): ReactElement => {
-  if (chapters === null || chapter === null) {
-    return <Custom404 chapters={chapters} />
-  }
-
   return (
     <Layout pageTitle={`${chapter.id}. ${chapter.title}`} chapters={chapters}>
       <Head>
@@ -50,9 +45,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const params = context.params as Params
 
   const rulebook = (await fetchAPI("/chapters")) as types.Rulebook
+
   const chapters: types.Chapter[] = rulebook.chapters
 
   let chapter: types.Chapter = chapters[Number(params.slug) - 1] || null
+
+  if (!rulebook || !chapter) {
+    return {
+      notFound: true,
+    }
+  }
+
   if (chapter) {
     chapter = addReferences(chapter)
   }

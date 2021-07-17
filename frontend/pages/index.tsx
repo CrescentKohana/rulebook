@@ -19,14 +19,14 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
 
       <Layout pageTitle="Rulebook" chapters={chapters}>
         <Typography variant="body1" paragraph={true} align="left">
-          On this site one can find well-formatted rules for Magic the Gathering{" "}
+          On this site one can find well-formatted rules for Magic the Gathering (
           <Link href="https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt">
-            <a>(source)</a>
+            <a>source</a>
           </Link>
-          . This URL and{" "}
+          ). Aforementioned URL and{" "}
           <Link href="https://raw.githubusercontent.com/Luukuton/rulebook/master/backend/tests/testdata/rulebook_test_data.txt">
             <a>the mock data here</a>
-          </Link>
+          </Link>{" "}
           can be used with the <b>Replace</b> on the left.
         </Typography>
         <Typography variant="body1" paragraph={true} align="left">
