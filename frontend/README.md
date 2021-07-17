@@ -22,7 +22,7 @@ The backend has to be up and running before trying to build the site!
 
 ## Something to note
 
-> The user has to reload the site manually after Replacing the rule data even with `Router.reload()` imported from `next/router`. I wasn't able to debug the cause in
+The user has to reload the site manually after Replacing the rule data even with `Router.reload()` imported from `next/router`. I wasn't able to debug the cause in
 reasonable time. When 'on-demand revalidation' is going be available for Next.js, this will be fixed:
 
 - [github.com/vercel/next.js/discussions/11552#discussioncomment-2655](https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655)

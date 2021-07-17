@@ -11,7 +11,7 @@ Made with Golang.
 
 **Information about End to End testing can be found in the main [README](../README.md)**
 
-### Unit tests
+### Unit
 
 - Run tests `go test ./tests -v -coverpkg ./utils -coverprofile "coverage.out"` in `backend/`
 - Generate human readable HTML coverage report `go tool cover -html "coverage.out"`

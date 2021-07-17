@@ -40,6 +40,8 @@ Also running on my personal server: [rulebook.luukuton.fi](https://rulebook.luuk
 
 ### Unit
 
+**Information about unit testing can be found in backend's [README](backend)**
+
 ## Requirements
 
 - Docker 3.4+
@@ -48,4 +50,5 @@ Also running on my personal server: [rulebook.luukuton.fi](https://rulebook.luuk
 ## Future improvements
 
 - Authentication for the URL input
-- [Currently replace requires manual reload of the site, fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)
+- Currently Replace functionality requires manual reload of the site. [Fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)
+- Optimize the number of API calls to the backend
