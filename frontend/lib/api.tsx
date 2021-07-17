@@ -28,7 +28,7 @@ export async function fetchAPI(path: string, query = ""): Promise<types.Rulebook
 }
 
 /**
- * Returns the domain of the site with specified path
+ * Returns the domain of the site with specified path.
  *
  * @returns Domain as string
  */

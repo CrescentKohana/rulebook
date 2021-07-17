@@ -28,7 +28,7 @@ reasonable time. When 'on-demand revalidation' is going be available for Next.js
 - [github.com/vercel/next.js/discussions/11552#discussioncomment-2655](https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655)
 - [stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand](https://stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand)
 
-### Dependencies
+## Dependencies
 
 - nodejs v14.17.1+ (LTS)
 - npm (tested with 7.19.1+)
