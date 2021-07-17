@@ -1,0 +1,4 @@
+coverage.out
+backend
+backend.exe
+tests/testdata/test_download.txt

@@ -5,10 +5,6 @@ docker-compose.yml
 .idea
 backend/rest/
 
-# build executables
-backend/backend
-backend/backend.exe
-
 # some secrets during testing
 .env.secrets
 docker-compose.secret.yml

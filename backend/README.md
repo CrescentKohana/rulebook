@@ -7,6 +7,15 @@ Made with Golang.
 - Build with `go build .`
 - Run with `.\backend <type> <source> <data dir>`
 
+## Testing
+
+**Information about End to End testing can be found in the main [README](../README.md)**
+
+### Unit tests
+
+- Run tests `go test ./tests -v -coverpkg ./utils -coverprofile "coverage.out"` in `backend/`
+- Generate human readable HTML coverage report `go tool cover -html "coverage.out"`
+
 ### Arguments:
 
 - **type**: The type of the initial rule data source (file or url)

@@ -17,7 +17,7 @@ func DownloadFile(url string, filename string) (string, error) {
 		return "", err
 	}
 
-	output, err := os.Create(DataPath + "temp.txt")
+	output, err := os.Create(DataPath + filename)
 	if err != nil {
 		return "", err
 	}
@@ -30,7 +30,7 @@ func DownloadFile(url string, filename string) (string, error) {
 	buffer, err := ioutil.ReadAll(r)
 	if err != nil {
 		output.Close()
-		os.Remove(DataPath + "temp.txt")
+		os.Remove(DataPath + filename)
 		return "", err
 	}
 
@@ -40,9 +40,9 @@ func DownloadFile(url string, filename string) (string, error) {
 
 	if err != nil {
 		output.Close()
-		os.Remove(DataPath + "temp.txt")
+		os.Remove(DataPath + filename)
 		return "", err
 	}
 
-	return (DataPath + "temp.txt"), nil
+	return (DataPath + filename), nil
 }
