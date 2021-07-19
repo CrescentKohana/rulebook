@@ -27,7 +27,16 @@ const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): Rea
           <Link href="https://raw.githubusercontent.com/Luukuton/rulebook/master/backend/tests/testdata/rulebook_test_data.txt">
             <a>the mock data here</a>
           </Link>{" "}
-          can be used with the <b>Replace</b> on the left.
+          can be used with the <b>Replace</b> on the left.{" "}
+          <b>
+            Replacing the data on the site requires a manual reload because of the nature of Next.js and static site
+            generation.
+          </b>{" "}
+          I hope to change this in the future.{" "}
+          <Link href="https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655">
+            <a>Some discussion</a>
+          </Link>{" "}
+          on the topic.
         </Typography>
         <Typography variant="body1" paragraph={true} align="left">
           This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is
