@@ -51,4 +51,3 @@ Also running on my personal server: [rulebook.luukuton.fi](https://rulebook.luuk
 
 - Authentication for the URL input
 - Currently Replace functionality requires manual reload of the site. [Fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)
-- Optimize the number of API calls to the backend

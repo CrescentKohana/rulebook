@@ -1,8 +1,7 @@
 import { Button, TextField } from "@material-ui/core"
-import Router from "next/router"
 import { FC, useCallback, useState } from "react"
 import validator from "validator"
-import { postNextAPI } from "../lib/api"
+import { getDomain, postNextAPI } from "../lib/api"
 import styles from "../styles/Popup.module.css"
 
 /**
@@ -26,7 +25,7 @@ const ReplaceRulebook: FC = () => {
         // reasonable time. When 'on-demand revalidation' is going be available for Next.js, this will be fixed:
         // https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655
         // https://stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand
-        Router.reload()
+        window.location.href = getDomain()
       } else {
         setError(true)
         setHelperText("There was a problem trying to parse the given file.")

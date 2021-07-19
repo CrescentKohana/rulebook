@@ -45,9 +45,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const params = context.params as Params
 
   const rulebook = (await fetchAPI("/chapters")) as types.Rulebook
-
   const chapters: types.Chapter[] = rulebook.chapters
-
   let chapter: types.Chapter = chapters[Number(params.slug) - 1] || null
 
   if (!rulebook || !chapter) {
@@ -56,9 +54,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
-  if (chapter) {
-    chapter = addReferences(chapter)
-  }
+  chapter = addReferences(chapter)
 
   return {
     props: { chapters, chapter },
