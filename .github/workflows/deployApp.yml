@@ -63,8 +63,8 @@ jobs:
           STORAGE_ACCOUNT_NAME:  '${{ secrets.STORAGE_ACCOUNT_NAME }}'
           STORAGE_ACCOUNT_KEY:  '${{ secrets.STORAGE_ACCOUNT_KEY }}'
 
-      - name: Online check
-        id: online_check
-        uses: pchalupa/site-health-check@v1.0.2
-        with:
-          url: '${{ secrets.AZURE_PUBLIC_URL }}'
+#       - name: Online check
+#         id: online_check
+#         uses: pchalupa/site-health-check@v1.0.2
+#         with:
+#           url: '${{ secrets.AZURE_PUBLIC_URL }}'
