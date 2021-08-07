@@ -49,4 +49,4 @@ Also running on my personal server: [rulebook.luukuton.fi](https://rulebook.luuk
 ## Future improvements
 
 - Authentication for the URL input
-- ✅ Fixed ~~Currently Replace functionality requires manual reload of the site. [Fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)~~
+- ✅ [Fixed](https://github.com/Luukuton/rulebook/commit/8a214917299740911d2128c979badee7e2f6a94e) ~~Currently Replace functionality requires manual reload of the site. [Fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)~~
