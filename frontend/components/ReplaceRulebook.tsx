@@ -1,11 +1,11 @@
 import { Button, TextField } from "@material-ui/core"
 import { FC, useCallback, useState } from "react"
 import validator from "validator"
-import { getDomain, postNextAPI } from "../lib/api"
+import { postNextAPI } from "../lib/api"
 import styles from "../styles/Popup.module.css"
 
 /**
- * Rulebook replacer content for a popup.
+ * Rulebook replacer.
  */
 const ReplaceRulebook: FC = () => {
   const defaultHelper = "Enter a direct URL to a correctly formatted text file to replace the rulebook on the site."
@@ -21,11 +21,8 @@ const ReplaceRulebook: FC = () => {
     if (!error) {
       const response = await postNextAPI("/api/v1/chapters", { url })
       if (response.code === 201) {
-        // Even with this the user has to reload the site manually after. I wasn't able to debug the cause in
-        // reasonable time. When 'on-demand revalidation' is going be available for Next.js, this will be fixed:
-        // https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655
-        // https://stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand
-        window.location.href = getDomain()
+        // Reload the site to fetch new data after a replacing the ruledata.
+        window.location.reload()
       } else {
         setError(true)
         setHelperText("There was a problem trying to parse the given file.")

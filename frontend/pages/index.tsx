@@ -1,63 +1,106 @@
-import { Typography } from "@material-ui/core"
-import { GetStaticProps, InferGetStaticPropsType } from "next"
+import { IconButton, Typography } from "@material-ui/core"
+import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined"
+import { GetServerSideProps } from "next"
 import Head from "next/head"
-import Link from "next/link"
-import { ReactElement } from "react"
-import Layout from "../components/Layout"
+import React, { ReactElement, useState } from "react"
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom"
+import Chapter from "../components/Chapter"
+import Home from "../components/Home"
+import Menu from "../components/Menu"
 import { fetchAPI } from "../lib/api"
+import { addReferences } from "../lib/references"
+import styles from "../styles/Layout.module.css"
+import typography from "../styles/Typography.module.css"
 import * as types from "../types"
+
+interface Props {
+  chapters: types.Chapter[]
+}
 
 /**
  * Home page.
  */
-const Home = ({ chapters }: InferGetStaticPropsType<typeof getStaticProps>): ReactElement => {
-  return (
-    <div>
-      <Head>
-        <title>Rulebook</title>
-      </Head>
+const Index = ({ chapters }: Props): ReactElement => {
+  const [open, setOpen] = useState(false)
+  const closeMenu = () => setOpen(!open)
 
-      <Layout pageTitle="Rulebook" chapters={chapters}>
-        <Typography variant="body1" paragraph={true} align="left">
-          On this site one can find well-formatted rules for Magic the Gathering (
-          <Link href="https://media.wizards.com/2021/downloads/MagicCompRules%2020210419.txt">
-            <a>source</a>
-          </Link>
-          ). Aforementioned URL and{" "}
-          <Link href="https://raw.githubusercontent.com/Luukuton/rulebook/master/backend/tests/testdata/rulebook_test_data.txt">
-            <a>the mock data here</a>
-          </Link>{" "}
-          can be used with the <b>Replace</b> on the left.{" "}
-          <b>
-            Replacing the data on the site requires a manual reload because of the nature of Next.js and static site
-            generation.
-          </b>{" "}
-          I hope to change this in the future.{" "}
-          <Link href="https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655">
-            <a>Some discussion</a>
-          </Link>{" "}
-          on the topic.
-        </Typography>
-        <Typography variant="body1" paragraph={true} align="left">
-          This is just the frontend which is powered by Next.js + TypeScript. The backend doing the actual parsing is
-          written in Go. By Marko Leinikka (2021).
-        </Typography>
-        <Typography variant="body1" paragraph={true} align="left">
-          Hint: Pressing Q opens up the Search!
-        </Typography>
-      </Layout>
-    </div>
+  const menuClasses = `${styles.menu} ${!open && styles.menuHidden}`
+
+  return (
+    <Router>
+      <div className={styles.main}>
+        <IconButton id={styles.menuButton} color="default" onClick={closeMenu} edge="start" aria-label="menu">
+          <MenuOutlinedIcon />
+        </IconButton>
+        <div className={styles.row}>
+          <div className={menuClasses}>
+            <div className={styles.menuWrap}>
+              <div className={typography.header}>
+                <h1 className={typography.title}>
+                  <Link to="/">Rulebook</Link>
+                </h1>
+              </div>
+              <nav id="nav">
+                {chapters.map((chapter: types.Chapter) => (
+                  <div key={chapter.id}>
+                    <Link id={`chapter-${chapter.id}`} to={`/chapter/${chapter.id}`}>
+                      {chapter.id}. {chapter.title}
+                    </Link>
+                  </div>
+                ))}
+              </nav>
+
+              <Menu chapters={chapters} />
+            </div>
+          </div>
+          <div className={styles.content}>
+            <div>
+              <Switch>
+                {chapters.map((chapter: types.Chapter) => (
+                  <Route key={chapter.id} path={`/chapter/${chapter.id}`}>
+                    <Chapter chapter={chapter} />
+                  </Route>
+                ))}
+                <Route exact path="/">
+                  <div>
+                    <Head>
+                      <title>Rulebook</title>
+                    </Head>
+                    <Home />
+                  </div>
+                </Route>
+                <Route>
+                  <div>
+                    <Head>
+                      <title>Rulebook | 404</title>
+                    </Head>
+                    <Typography variant="h3" align="center">
+                      404 - not found
+                    </Typography>
+                  </div>
+                </Route>
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Router>
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const rulebook = (await fetchAPI("/chapters")) as types.Rulebook
-  const chapters: types.Chapter[] = rulebook.chapters
+  const rawChapters: types.Chapter[] = rulebook.chapters
+
+  // Add references to every chapter.
+  const chapters: types.Chapter[] = []
+  rawChapters.forEach((chapter) => {
+    chapters.push(addReferences(chapter))
+  })
 
   return {
     props: { chapters },
-    revalidate: 1,
   }
 }
 
-export default Home
+export default Index

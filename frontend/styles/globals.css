@@ -26,6 +26,10 @@ a:active {
   color: #4084c4;
 }
 
+nav {
+  margin: 10px 0 10px 0;
+}
+
 nav a,
 footer a {
   color: #4da3f3;

@@ -4,7 +4,7 @@ describe("Rulebook", function () {
   })
 
   it("front page can be opened", function () {
-    cy.contains("On this site one can find well-formatted rules for Magic the Gathering.")
+    cy.contains("On this site one can find well-formatted rules for Magic the Gathering")
   })
 
   it("first chapter can be opened", function () {

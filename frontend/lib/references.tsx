@@ -25,10 +25,13 @@ function addLinks(rule: string): string {
  * @returns a chapter with references to other rules tagged as html a-tag links
  */
 export function addReferences(chapter: types.Chapter): types.Chapter {
+  // Each subchapter
   chapter.subchapters.forEach((subchapter: types.Subchapter, subChIndex) => {
+    // Each rule
     subchapter.rules.forEach((rule: types.Rule, ruleIndex) => {
       const ruleContent: string = chapter.subchapters[subChIndex].rules[ruleIndex].content
       chapter.subchapters[subChIndex].rules[ruleIndex].content = addLinks(ruleContent)
+      // Each subrule
       rule.subrules.forEach((_, subruleIndex) => {
         const subruleContent: string = chapter.subchapters[subChIndex].rules[ruleIndex].subrules[subruleIndex].content
         chapter.subchapters[subChIndex].rules[ruleIndex].subrules[subruleIndex].content = addLinks(subruleContent)

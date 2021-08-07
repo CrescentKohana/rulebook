@@ -1,11 +1,8 @@
-import Link from "next/link"
 import React, { FC, useEffect, useState } from "react"
 import styles from "../styles/Layout.module.css"
-import typography from "../styles/Typography.module.css"
 import * as types from "../types"
 import Footer from "./Footer"
-import Nav from "./Nav"
-import PopupWrapper from "./PopupWrap"
+import PopupWrap from "./PopupWrap"
 import ReplaceRulebook from "./ReplaceRulebook"
 import Search from "./Search"
 
@@ -42,28 +39,14 @@ const Menu: FC<MenuProps> = ({ chapters }) => {
   }, [searchOpen, addOpen])
 
   return (
-    <div className={styles.menuWrap}>
-      <div className={typography.header}>
-        <h1 className={typography.title}>
-          <Link href="/">
-            <a>Rulebook</a>
-          </Link>
-        </h1>
-      </div>
-      <Nav chapters={chapters} />
-      <div id={styles.subNav}>
-        <PopupWrapper btnTitle="Search" openState={[searchOpen, setSearchOpen]} closePopup={closeSearchPopup}>
-          <Search chapters={chapters} closePopup={closeSearchPopup} />
-        </PopupWrapper>
-        <br />
-        <br />
-        <PopupWrapper btnTitle="Replace" openState={[addOpen, setAddOpen]} closePopup={closeAddPopup}>
-          <ReplaceRulebook />
-        </PopupWrapper>
-        <br />
-        <br />
-        <Footer />
-      </div>
+    <div id={styles.subNav}>
+      <PopupWrap btnTitle="Search" openState={[searchOpen, setSearchOpen]} closePopup={closeSearchPopup}>
+        <Search chapters={chapters} closePopup={closeSearchPopup} />
+      </PopupWrap>
+      <PopupWrap btnTitle="Replace" openState={[addOpen, setAddOpen]} closePopup={closeAddPopup}>
+        <ReplaceRulebook />
+      </PopupWrap>
+      <Footer />
     </div>
   )
 }

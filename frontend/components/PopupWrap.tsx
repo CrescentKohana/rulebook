@@ -13,9 +13,9 @@ interface PopupProps {
 /**
  * Wrapper for the Popup class with a Button which opens it.
  */
-const PopupWrapper: FC<PopupProps> = ({ btnTitle, openState, closePopup, children }) => {
+const PopupWrap: FC<PopupProps> = ({ btnTitle, openState, closePopup, children }) => {
   return (
-    <>
+    <div style={{ marginBottom: 20 }}>
       <Button
         id={`${btnTitle.toLowerCase()}-btn`}
         variant="contained"
@@ -27,8 +27,8 @@ const PopupWrapper: FC<PopupProps> = ({ btnTitle, openState, closePopup, childre
       <Popup className={styles.modal} open={openState[0]} closeOnDocumentClick onClose={closePopup} modal>
         {children}
       </Popup>
-    </>
+    </div>
   )
 }
 
-export default PopupWrapper
+export default PopupWrap
