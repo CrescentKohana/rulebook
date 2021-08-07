@@ -1,12 +1,16 @@
 # Frontend
 
-Made with TypeScript + Next.js. Utilizes [static site generation](https://nextjs.org/docs/basic-features/pages#static-generation-recommended) (SSG) and [incremental static regeneration](https://vercel.com/docs/next.js/incremental-static-regeneration) (ISR).
+A single page app (SPA) made with Next.js which utilizes [server side rendering](https://nextjs.org/docs/basic-features/pages#server-side-rendering) (SSR).
 
-Navigation and every page (chapter) available during build-time are rendered beforehand by the server. In addition, rerendering occurs periodically afterwards. Any new chapters (not available during build-time) will be rendered by the server on the first request blocking the view for the duration of the render (talking about milliseconds here).
+As it's in the the nature of the site to have the whole rulebook (chapters) to be available at all times **without ever adding any new data**, only **replacing the whole data set** on user request, server side rendering (SSR) works very well. There's no need for static site generation (SSG) and incremental static regeneration (ISG) which in turn would work well in applications such as blogs where new articles could be added at any time.
+
+The app is also using React router instead of the one from Next.js for the reasons explained [here](https://colinhacks.com/essays/building-a-spa-with-nextjs):
+
+> Next.js is not as flexible as React Router! React Router lets you nest routers hierarchically in a flexible way. It's easy for any "parent" router to share data with all of its "child" routes. This isn't possible with Next's built-in router!
 
 ## Usage
 
-The backend has to be up and running before trying to build the site!
+_The backend does not have to be up during the build of the frontend._
 
 - `npm install` to install dependencies
 - `npm run dev` for development.
@@ -19,14 +23,6 @@ The backend has to be up and running before trying to build the site!
 ## Style
 
 - `npm run prettier -- --write .` and `npm run lint` for style checks.
-
-## Something to note
-
-The user has to reload the site manually after Replacing the rule data even with `Router.reload()` imported from `next/router`. I wasn't able to debug the cause in
-reasonable time. When 'on-demand revalidation' is going be available for Next.js, this will be fixed:
-
-- [github.com/vercel/next.js/discussions/11552#discussioncomment-2655](https://github.com/vercel/next.js/discussions/11552#discussioncomment-2655)
-- [stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand](https://stackoverflow.com/questions/66995817/next-js-static-regeneration-on-demand)
 
 ## Dependencies
 

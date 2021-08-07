@@ -45,9 +45,8 @@ Also running on my personal server: [rulebook.luukuton.fi](https://rulebook.luuk
 ## Requirements
 
 - Docker 3.4+
-- [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it) (already [bundled](frontend/wait-for-it.sh))
 
 ## Future improvements
 
 - Authentication for the URL input
-- Currently Replace functionality requires manual reload of the site. [Fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)
+- ✅ Fixed ~~Currently Replace functionality requires manual reload of the site. [Fix this when 'on-demand revalidation' is available in Next.js](frontend#something-to-note)~~
