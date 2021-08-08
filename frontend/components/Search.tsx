@@ -1,8 +1,8 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core"
 import LinkIcon from "@material-ui/icons/Link"
-import Link from "next/link"
 import { CSSProperties, FC, SyntheticEvent, useCallback, useState } from "react"
 import Highlighter from "react-highlight-words"
+import { HashLink } from "react-router-hash-link"
 import { FixedSizeList as List } from "react-window"
 import { sanitize } from "../lib/sanitizers"
 import { search, SearchResults } from "../lib/search"
@@ -42,26 +42,24 @@ const Search: FC<SearchProps> = ({ chapters, closePopup }) => {
         className={styles.result}
         style={style}
       >
-        <Link href={`/chapter/${r.chapterId}?highlight=${query}#${r.comboId}`}>
-          <a onClick={closePopup}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">
-                  {r.comboId + " "}
-                  <Typography color="textSecondary" display="inline">
-                    Chapter {r.chapterId}: {r.chapterTitle}
-                  </Typography>
-                  <LinkIcon color="primary" className={styles.linkIcon} />
+        <HashLink to={`/chapter/${r.chapterId}#${r.comboId}`} onClick={closePopup}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">
+                {r.comboId + " "}
+                <Typography color="textSecondary" display="inline">
+                  Chapter {r.chapterId}: {r.chapterTitle}
                 </Typography>
-                <Typography variant="body2" component="p">
-                  <div className={styles.resultContent}>
-                    <Highlighter searchWords={[query]} autoEscape={true} textToHighlight={sanitize(r.snippet)} />
-                  </div>
-                </Typography>
-              </CardContent>
-            </Card>
-          </a>
-        </Link>
+                <LinkIcon color="primary" className={styles.linkIcon} />
+              </Typography>
+              <Typography variant="body2" component="p">
+                <div className={styles.resultContent}>
+                  <Highlighter searchWords={[query]} autoEscape={true} textToHighlight={sanitize(r.snippet)} />
+                </div>
+              </Typography>
+            </CardContent>
+          </Card>
+        </HashLink>
       </div>
     )
   }

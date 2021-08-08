@@ -2,8 +2,8 @@ import { IconButton, Typography } from "@material-ui/core"
 import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined"
 import { GetServerSideProps } from "next"
 import Head from "next/head"
-import React, { ReactElement, useState } from "react"
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom"
+import React, { ReactElement, useEffect, useState } from "react"
+import { BrowserRouter as Router, Link, Route, Switch, useLocation } from "react-router-dom"
 import Chapter from "../components/Chapter"
 import Home from "../components/Home"
 import Menu from "../components/Menu"
@@ -18,16 +18,32 @@ interface Props {
 }
 
 /**
+ * Helper to make the page scroll to the top when clicking navigation links.
+ */
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
+/**
  * Home page.
  */
 const Index = ({ chapters }: Props): ReactElement => {
   const [open, setOpen] = useState(false)
   const closeMenu = () => setOpen(!open)
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const menuClasses = `${styles.menu} ${!open && styles.menuHidden}`
 
   return (
     <Router>
+      <ScrollToTop />
       <div className={styles.main}>
         <IconButton id={styles.menuButton} color="default" onClick={closeMenu} edge="start" aria-label="menu">
           <MenuOutlinedIcon />

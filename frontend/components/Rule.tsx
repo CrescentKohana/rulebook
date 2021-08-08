@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { FC } from "react"
+import { HashLink } from "react-router-hash-link"
 import { keepLinks } from "../lib/sanitizers"
 import styles from "../styles/Rule.module.css"
 import * as types from "../types"
@@ -17,9 +17,7 @@ interface RuleProps {
 const Rule: FC<RuleProps> = ({ data, chapterId, subchapterId }: RuleProps) => {
   return (
     <div id={`${subchapterId}.${data.id}`} className={styles.rule}>
-      <Link href={`/chapter/${chapterId}#${subchapterId}.${data.id}`}>
-        <a>{data.id}:</a>
-      </Link>{" "}
+      <HashLink to={`/chapter/${chapterId}#${subchapterId}.${data.id}`}>{data.id}:</HashLink>{" "}
       <span dangerouslySetInnerHTML={{ __html: keepLinks(data.content) }} />
       <div className={styles.subrules}>
         {data.subrules.map((subrule) => (
