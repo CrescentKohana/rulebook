@@ -27,7 +27,6 @@ type formData struct {
 var rulebook types.Rulebook
 var tinyChapters types.Rulebook
 
-
 // Fills tinyChapters without subchapter data.
 func fillTinyChapters(chapters []types.Chapter) {
 	var tmpChapters types.Rulebook
@@ -46,7 +45,7 @@ func returnSubchapter(w http.ResponseWriter, r *http.Request) {
 	subchapterID, _ := strconv.Atoi(params["subid"])
 
 	// Subtracts the padding (e.g. 203 -> 3 or 100 -> 0).
-	subchapterID -= (chapterID * 100)
+	subchapterID -= chapterID * 100
 
 	tooSmall := chapterID < 1 || subchapterID < 0
 	tooLarge := chapterID > len(rulebook.Chapters) || subchapterID > len(rulebook.Chapters[chapterID-1].Subchapters)-1
@@ -89,8 +88,8 @@ func returnRulebook(w http.ResponseWriter, r *http.Request) {
 func newRulebook(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
 
-	var originLocalhost = regexp.MustCompile(`^https?:\/\/(?:localhost):\d+$`)
-	var originFrontend = regexp.MustCompile(`^https?:\/\/(?:frontend):\d+$`)
+	var originLocalhost = regexp.MustCompile(`^https?://localhost:\d+$`)
+	var originFrontend = regexp.MustCompile(`^https?://frontend:\d+$`)
 
 	if originFrontend.MatchString(origin) || originLocalhost.MatchString(origin) {
 		w.Header().Set("Access-Control-Allow-Origin", origin)
@@ -129,7 +128,7 @@ func newRulebook(w http.ResponseWriter, r *http.Request) {
 
 	newRulebook := *utils.ParseTextToRulebook(path)
 	if len(newRulebook.Chapters) == 0 {
-		errorHandler(w, r, http.StatusBadRequest, "invalid url body parameter or its content was malformed")
+		errorHandler(w, r, http.StatusBadRequest, "file content was malformed")
 		return
 	}
 
@@ -143,13 +142,13 @@ func newRulebook(w http.ResponseWriter, r *http.Request) {
 }
 
 // Returns the root path as JSON.
-func root(w http.ResponseWriter, r *http.Request) {
+func root(w http.ResponseWriter, _ *http.Request) {
 	fmt.Fprintf(w, `{ "message": "Latest Rulebook API available at /api/v1/chapters" }`)
 	log.Println("Endpoint Hit: root")
 }
 
 // Handles errors. Argument msg is only used with bad requests
-func errorHandler(w http.ResponseWriter, r *http.Request, status int, msg string) {
+func errorHandler(w http.ResponseWriter, _ *http.Request, status int, msg string) {
 	switch status {
 	case http.StatusNotFound:
 		w.WriteHeader(status)
@@ -172,6 +171,8 @@ func handleRequests() {
 	r := mux.NewRouter().StrictSlash(true)
 
 	// Routers
+	// if an incoming request URL matches one of the paths,
+	// the corresponding handler is called passing (http.ResponseWriter, *http.Request) as parameters.
 	r.HandleFunc("/", root).Methods("GET")
 	r.HandleFunc(baseURL+"/chapters", returnRulebook).Methods("GET")
 	r.HandleFunc(baseURL+"/chapters", newRulebook).Methods("POST", "OPTIONS")
@@ -186,7 +187,7 @@ func handleRequests() {
 	log.Error(http.ListenAndServe(":5050", r))
 }
 
-// Starts API server.
+// StartAPI Starts API server.
 func StartAPI(rulebookArg types.Rulebook) {
 	rulebook = rulebookArg
 	fillTinyChapters(rulebook.Chapters)

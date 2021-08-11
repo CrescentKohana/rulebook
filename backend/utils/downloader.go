@@ -10,7 +10,7 @@ import (
 
 var DataPath = "/usr/data/"
 
-// Downloads a file from the given url to the given filepath. Used to get rule data from the internet.
+// DownloadFile downloads a file from the given url to the given filepath. Used to get rule data from the internet.
 func DownloadFile(url string, filename string) (string, error) {
 	response, err := http.Get(url)
 	if err != nil {
@@ -34,9 +34,8 @@ func DownloadFile(url string, filename string) (string, error) {
 		return "", err
 	}
 
-
-	bytes := bytes.NewReader(buffer)
-	_, err = io.Copy(output, bytes)
+	reader := bytes.NewReader(buffer)
+	_, err = io.Copy(output, reader)
 
 	if err != nil {
 		output.Close()
@@ -44,5 +43,5 @@ func DownloadFile(url string, filename string) (string, error) {
 		return "", err
 	}
 
-	return (DataPath + filename), nil
+	return DataPath + filename, nil
 }

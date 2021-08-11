@@ -13,7 +13,7 @@ import (
 	"github.com/Luukuton/rulebook/backend/types"
 )
 
-// Parses given text file to structs defined in types/rulebook.go.
+// ParseTextToRulebook parses given text file to structs defined in types/rulebook.go.
 // Input file is expected to be formatted correctly.
 func ParseTextToRulebook(filePath string) *types.Rulebook {
 	file, err := os.Open(filePath)
@@ -34,7 +34,7 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 	var subchapterR = regexp.MustCompile(`^(\d{3})\.\s(.*)$`)
 	var ruleR = regexp.MustCompile(`^\d{3}\.(\d{1,3})\.\s(.*)$`)
 	var subruleR = regexp.MustCompile(`^\d{3}\.\d{1,3}(\w)\s(.*)$`)
-	var previousR = regexp.MustCompile(`^([^\d].*)$`)
+	var previousR = regexp.MustCompile(`^([^\d].*)$`) // line belonging to the previous rule or subrule
 
 	var currentChapter int
 	var currentSubchapter int
@@ -156,7 +156,7 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 	return &rulebook
 }
 
-// Parses and unmarshals a given JSON file.
+// ParseJSON parses and unmarshals a given JSON file.
 func ParseJSON(filePath string) *types.Rulebook {
 	jsonFile, err := os.Open(filePath)
 

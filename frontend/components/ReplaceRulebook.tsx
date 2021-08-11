@@ -1,5 +1,5 @@
 import { Button, TextField } from "@material-ui/core"
-import { FC, useCallback, useState } from "react"
+import { FC, SyntheticEvent, useCallback, useState } from "react"
 import validator from "validator"
 import { postNextAPI } from "../lib/api"
 import styles from "../styles/Popup.module.css"
@@ -13,7 +13,7 @@ const ReplaceRulebook: FC = () => {
   const [error, setError] = useState(false)
   const [helperText, setHelperText] = useState(defaultHelper)
 
-  const addURL = async (event: React.SyntheticEvent) => {
+  const addURL = async (event: SyntheticEvent) => {
     event.preventDefault()
     const element = event.currentTarget as HTMLInputElement
     setURL(element.value)

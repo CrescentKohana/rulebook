@@ -21,8 +21,8 @@ function addLinks(rule: string): string {
 /**
  * Wraps addLinks function to a loop that goes through every rule and subrule in a chapter.
  *
- * @param a chapter
- * @returns a chapter with references to other rules tagged as html a-tag links
+ * @param chapter
+ * @returns chapter with references to other rules tagged as html a-tag links
  */
 export function addReferences(chapter: types.Chapter): types.Chapter {
   // Each subchapter

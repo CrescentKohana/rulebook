@@ -10,7 +10,6 @@ import * as types from "../types"
 export function getAPIURL(path = "", host = false): string {
   const urlString = process.env.RULEBOOK_API_URL || "http://localhost:5050/api/v1"
   const url = new URL(urlString)
-  url.protocol + "//" + url.host
   return host ? `${url.protocol}//${url.host}${path}` : `${urlString}${path}`
 }
 
@@ -41,7 +40,7 @@ export function getDomain(path = ""): string {
  * Sends a JSON POST request to the middleman API in Next.js.
  *
  * @param path
- * @param body JSON data
+ * @param data
  * @returns JSON response
  */
 export async function postNextAPI(path: string, data: { url: string }): Promise<{ code: number; message: string }> {
@@ -56,10 +55,9 @@ export async function postNextAPI(path: string, data: { url: string }): Promise<
 }
 
 /**
- * Sends a JSON POST request to the middleman API in Next.js.
+ * Sends a JSON GET request to the middleman API in Next.js.
  *
  * @param path
- * @param body JSON data
  * @returns JSON response
  */
 export async function getNextAPI(path: string): Promise<types.Rulebook> {
