@@ -1,0 +1,47 @@
+1. Game Concepts
+
+100. Offence
+
+100.1. Always try to attack.
+
+100.1a Except when defending. See rule 101.1.
+
+100.1b Except when you have lost.
+
+100.2. Each and every attack has to be at full power.
+
+100.2a Full power as in 100% of your power, no less.
+
+100.2b Power can be more than 100%.
+
+101. Defence
+
+101.1. Always defend if you're being attacked.
+
+101.2. Defending does not have to be at full power.
+
+101.2a It has to be more than 0%.
+
+2. Types
+
+200. Fairies
+
+200.1. Fairies are good at offence.
+
+200.1a They should be used for offence, but it's not forced. See rule 100.
+
+200.2. One cannot command more than 500 fairies at the same time.
+
+200.2a Nor less than 0.
+Example: 232 fairies.
+
+201. Dragons
+
+201.1. Dragons are good at defence.
+
+201.1a They should be used for defence, but it's not forced. See rule 101.2a.
+
+201.2. One cannot command more than 100 dragons at the same time.
+Just some text after line break
+
+201.2a Nor less than 0.

@@ -17,7 +17,6 @@ import (
 // Input file is expected to be formatted correctly.
 func ParseTextToRulebook(filePath string) *types.Rulebook {
 	file, err := os.Open(filePath)
-
 	rulebook := types.Rulebook{Chapters: []types.Chapter{}}
 
 	if err != nil {
@@ -28,38 +27,46 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-
 	// Pre-compiled regex
 	var chapterR = regexp.MustCompile(`^(\d)\.\s(.*)$`)
 	var subchapterR = regexp.MustCompile(`^(\d{3})\.\s(.*)$`)
 	var ruleR = regexp.MustCompile(`^\d{3}\.(\d{1,3})\.\s(.*)$`)
 	var subruleR = regexp.MustCompile(`^\d{3}\.\d{1,3}(\w)\s(.*)$`)
-	var previousR = regexp.MustCompile(`^([^\d].*)$`) // line belonging to the previous rule or subrule
+	var contentR = regexp.MustCompile(`^([^\d].*)$`) // line belonging to the previous rule or subrule
 
-	var currentChapter int
+	currentChapter := -1
 	var currentSubchapter int
 	var currentRule int
 	var currentSubrule string
-	var prevLine string
+
+	type PrevLine int
+	const (
+		FALSE PrevLine = iota
+		RULE
+		SUBRULE
+	)
+	prevLine := FALSE
 
 	blocking := true
-
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		// Starts parsing after the first "Credits" in "Contents" as that's where the actual rules start.
-		if line == "Credits" {
-			blocking = false
-			continue
-		}
-
+		// Matches all non-empty, non-number starting lines (chapters, subchapters, rules, subrules).
+		contentMatched := contentR.MatchString(line)
 		// Done. No need to parse glossary nor credits.
-		if !blocking && line == "Glossary" {
+		if !blocking && prevLine == FALSE && contentMatched {
 			break
 		}
 
-		// Skips the beginning and empty lines.
-		if len(line) == 0 || blocking {
+		// Skips empty lines.
+		if len(line) == 0 {
+			// Disables the blocking mode when the previous line was the first chapter (e.g. 1. Placeholder)
+			// and the next line (i.e. current) is empty.
+			if currentChapter == 0 {
+				blocking = false
+			}
+
+			prevLine = FALSE
 			continue
 		}
 
@@ -73,6 +80,14 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 			rulebook.Chapters = append(rulebook.Chapters, chapter)
 			currentChapter = id - 1
 
+			continue
+		}
+
+		// Skips if still in the blocking mode aka actual rules haven't started yet.
+		// Also resets the current data.
+		if blocking {
+			currentChapter = -1
+			rulebook = types.Rulebook{Chapters: []types.Chapter{}}
 			continue
 		}
 
@@ -101,7 +116,7 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 			rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules = append(rules, rule)
 			currentRule = id - 1
 
-			prevLine = "RULE"
+			prevLine = RULE
 			continue
 		}
 
@@ -115,20 +130,19 @@ func ParseTextToRulebook(filePath string) *types.Rulebook {
 			rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules = append(subrules, subrule)
 			currentSubrule = capture[1]
 
-			prevLine = "SUBRULE"
+			prevLine = SUBRULE
 			continue
 		}
 
 		// Continuing previous rule or subrule on this line
-		matched = previousR.MatchString(line)
-		if matched {
-			capture := previousR.FindStringSubmatch(line)
+		if contentMatched {
+			capture := contentR.FindStringSubmatch(line)
 			extra := "\n" + capture[1]
 
 			switch prevLine {
-			case "RULE":
+			case RULE:
 				rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Content += extra
-			case "SUBRULE":
+			case SUBRULE:
 				for index, subrule := range rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules {
 					if subrule.ID == currentSubrule {
 						rulebook.Chapters[currentChapter].Subchapters[currentSubchapter].Rules[currentRule].Subrules[index].Content += extra

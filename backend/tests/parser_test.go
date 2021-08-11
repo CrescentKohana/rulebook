@@ -27,6 +27,24 @@ func TestParseText(t *testing.T){
     }
 }
 
+func TestParseTextWithMalformedHeaderFooter(t *testing.T){
+	got := ParseTextToRulebook("testdata/rulebook_test_data_malformed_extra.txt")
+	want := testRulebook
+
+	if diff := deep.Equal(got, want); diff != nil {
+			t.Errorf("rulebooks did not match. diff (got, want): %s", diff)
+	}
+}
+
+func TestParseTextWithOnlyRulesr(t *testing.T){
+	got := ParseTextToRulebook("testdata/rulebook_test_data_only_rules.txt")
+	want := testRulebook
+
+	if diff := deep.Equal(got, want); diff != nil {
+			t.Errorf("rulebooks did not match. diff (got, want): %s", diff)
+	}
+}
+
 func TestParseJSON(t *testing.T){
 	got := ParseJSON("testdata/rulebook_test_data.json")
 	want := testRulebook
