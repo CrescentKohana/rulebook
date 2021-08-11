@@ -4,12 +4,14 @@ RUN adduser -D appuser && mkdir /home/appuser/rulebook/
 WORKDIR /home/appuser/rulebook/
 COPY . .
 
+# Unit tests
+RUN apk add build-base && go test ./tests
+
 RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/rulebook-backend
 
 FROM alpine:3.14
 
 RUN mkdir /usr/data
-
 COPY --from=build-stage /go/bin/rulebook-backend /go/bin/rulebook-backend
 
 EXPOSE 5050
